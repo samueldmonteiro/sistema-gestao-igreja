@@ -15,3 +15,9 @@ admin:
     type: yaml
     prefix: api/admin
     name_prefix: admin_
+
+congregation:
+    resource: routes/api/congregation.yaml
+    type: yaml
+    prefix: api/congregation
+    name_prefix: congregation_

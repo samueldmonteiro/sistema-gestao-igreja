@@ -50,7 +50,7 @@ class AdminRegister
         }
 
         $admin = new Admin($name, $email, $password, $position, new DateTimeImmutable('now'));
-        $admin->setRoles(['IS_ADMIN']);
+        $admin->setRoles(['ROLE_IS_ADMIN']);
         $admin->setPassword($this->hasher->hashPassword($admin, $password));
 
         try {

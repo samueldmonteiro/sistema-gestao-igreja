@@ -40,8 +40,11 @@ class Congregation
     #[ORM\OneToMany(targetEntity: Tithe::class, mappedBy: 'congregation')]
     private Collection $tithes;
 
-    public function __construct()
+    public function __construct(string $name, string $town)
     {
+        $this->setName($name);
+        $this->setTown($town);
+        
         $this->members = new ArrayCollection();
         $this->congregationOfferings = new ArrayCollection();
         $this->tithes = new ArrayCollection();

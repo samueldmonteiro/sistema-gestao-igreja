@@ -3,11 +3,10 @@
 namespace App\Controller\Api;
 
 use App\UseCase\Auth\LoginAdmin;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-final class AuthController extends AbstractController
+final class AuthController extends BaseController
 {
     public function __construct(
         private LoginAdmin $loginAdmin
@@ -23,12 +22,7 @@ final class AuthController extends AbstractController
         $result = $this->loginAdmin->execute($email, $password);
 
         if ($result->isError()) {
-            return $this->json([
-                'error' => true,
-                'message' => $result->getErrorMessage(),
-                'context' => $result->getContext() ?? null
-
-            ], $result->getStatusCode());
+            return $this->jsonError($result);
         }
 
         return $this->json(['token' => $result->getValue()]);

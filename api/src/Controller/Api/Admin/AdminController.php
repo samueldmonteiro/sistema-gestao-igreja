@@ -2,13 +2,13 @@
 
 namespace App\Controller\Api\Admin;
 
+use App\Controller\Api\BaseController;
 use App\Service\JwtService;
 use App\UseCase\Admin\AdminRegister;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-final class AdminController extends AbstractController
+final class AdminController extends BaseController
 {
     public function __construct(
         private AdminRegister $adminRegister,
@@ -22,12 +22,7 @@ final class AdminController extends AbstractController
         $result = $this->adminRegister->execute($data);
 
         if ($result->isError()) {
-            return $this->json([
-                'error' => true,
-                'message' => $result->getErrorMessage(),
-                'context' => $result->getContext() ?? null
-
-            ], $result->getStatusCode());
+            return $this->jsonError($result);
         }
 
         $admin = $result->getValue();

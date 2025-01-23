@@ -1,0 +1,4 @@
+register:
+    path: /register
+    methods: [POST]
+    controller: App\Controller\Api\CongregationController::register

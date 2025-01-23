@@ -1,0 +1,5 @@
+
+register:
+    path: register
+    controller: App\Controller\Api\Admin\AdminController::register
+    methods: [POST]

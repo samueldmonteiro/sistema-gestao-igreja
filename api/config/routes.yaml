@@ -3,3 +3,15 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+auth:
+    resource: routes/api/auth.yaml
+    type: yaml
+    prefix: api/auth
+    name_prefix: auth_
+
+admin:
+    resource: routes/api/admin.yaml
+    type: yaml
+    prefix: api/admin
+    name_prefix: admin_

@@ -4,10 +4,14 @@ namespace App\Entity;
 
 use App\Entity\Enum\MaritalStatus;
 use App\Repository\MemberRepository;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: MemberRepository::class)]
 #[ORM\Table(name: 'members')]
@@ -16,34 +20,44 @@ class Member
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['member_read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['member_read'])]
     private ?string $fullName = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $birthDate = null;
+    #[Groups(['member_read'])]
+    private ?DateTimeInterface $birthDate = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['member_read'])]
     private ?string $telphone = null;
 
     #[ORM\Column]
+    #[Groups(['member_read'])]
     private ?bool $isBaptizedInWater = null;
 
     #[ORM\Column]
+    #[Groups(['member_read'])]
     private ?bool $isBaptizedInHolySpirit = null;
 
-    #[ORM\Column(type: 'string', enumType: MaritalStatus::class)]
-    private ?MaritalStatus $maritalStatus = null;
+    #[ORM\Column(length: 50)]
+    #[Groups(['member_read'])]
+    private ?string $maritalStatus = null;
 
     #[ORM\ManyToOne(inversedBy: 'members')]
+    #[MaxDepth(1)]
     private ?Congregation $congregation = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['member_read'])]
     private ?bool $isTither = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    #[Groups(['member_read'])]
+    private ?DateTimeImmutable $createdAt = null;
 
     /**
      * @var Collection<int, Tithe>
@@ -51,8 +65,25 @@ class Member
     #[ORM\OneToMany(targetEntity: Tithe::class, mappedBy: 'theMember')]
     private Collection $tithes;
 
-    public function __construct()
-    {
+    public function __construct(
+        string $fullName,
+        DateTimeInterface $birthDate,
+        string $telphone,
+        bool $isBaptizedInWater,
+        bool $isBaptizedInHolySpirit,
+        string $maritalStatus,
+        Congregation $congregation,
+        DateTimeImmutable $createdAt
+    ) {
+        $this->setFullName($fullName);
+        $this->setBirthDate($birthDate);
+        $this->setTelphone($telphone);
+        $this->setIsBaptizedInWater($isBaptizedInWater);
+        $this->setIsBaptizedInHolySpirit($isBaptizedInHolySpirit);
+        $this->setMaritalStatus($maritalStatus);
+        $this->setCongregation($congregation);
+        $this->setCreatedAt($createdAt);
+
         $this->tithes = new ArrayCollection();
     }
 
@@ -121,12 +152,12 @@ class Member
         return $this;
     }
 
-    public function getMaritalStatus(): ?MaritalStatus
+    public function getMaritalStatus(): ?string
     {
         return $this->maritalStatus;
     }
 
-    public function setMaritalStatus(MaritalStatus $maritalStatus): static
+    public function setMaritalStatus(string $maritalStatus): static
     {
         $this->maritalStatus = $maritalStatus;
 

@@ -21,6 +21,11 @@ class CongregationRepository extends ServiceEntityRepository
         return $this->findOneBy(['name' => $name]);
     }
 
+    public function findById(int $id): ?Congregation
+    {
+        return $this->findOneBy(['id' => $id]);
+    }
+
     public function save(Congregation $congregation): void
     {
         $this->getEntityManager()->persist($congregation);

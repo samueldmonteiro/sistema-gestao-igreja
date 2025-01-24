@@ -21,3 +21,9 @@ congregation:
     type: yaml
     prefix: api/congregation
     name_prefix: congregation_
+
+member:
+    resource: routes/api/member.yaml
+    type: yaml
+    prefix: api/member
+    name_prefix: member_

@@ -64,7 +64,7 @@ class MemberRegister
             return new Error('O campo congregação está mal formado', 400);
         }
 
-        $congregation = $this->congregationRepository->findById((int) $congregationId);
+        $congregation = $this->congregationRepository->findById($congregationId);
 
         if (!$congregation) {
             return new Error('Congregação inexistente', 400);

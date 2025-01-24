@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Integration\UseCase\Admin;
+namespace App\Tests\Integration\UseCase\Congregation;
 
 use App\Entity\Congregation;
 use App\UseCase\Congregation\CongregationRegister;

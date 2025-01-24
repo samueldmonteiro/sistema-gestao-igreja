@@ -22,6 +22,9 @@ final class MemberController extends BaseController
             return $this->jsonError($result);
         }
 
-        return $this->json(['member' => $result->getValue()], context: ['json', 'groups' => ['member_read']]);
+        return $this->json(
+            ['member' => $result->getValue()],
+            context: ['json', 'groups' => ['member_read']]
+        );
     }
 }

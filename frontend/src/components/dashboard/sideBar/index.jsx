@@ -60,6 +60,7 @@ const sections = [
     title: "MEMBROS",
     items: [
       { text: "Novo Membro", icon: <PersonAddIcon />, path: "/novo_membro" },
+      { text: "Ver Membros", icon: <PersonAddIcon />, path: "/ver_membros" },
     ],
   },
 ];

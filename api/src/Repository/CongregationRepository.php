@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Contract\Repository\CongregationRepositoryInterface;
 use App\Entity\Congregation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -9,7 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<Congregation>
  */
-class CongregationRepository extends ServiceEntityRepository
+class CongregationRepository extends ServiceEntityRepository implements CongregationRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -24,6 +25,11 @@ class CongregationRepository extends ServiceEntityRepository
     public function findById(int $id): ?Congregation
     {
         return $this->findOneBy(['id' => $id]);
+    }
+
+    public function getAll(): array
+    {
+        return $this->findAll();
     }
 
     public function save(Congregation $congregation): void

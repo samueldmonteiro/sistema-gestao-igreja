@@ -20,43 +20,44 @@ class Member
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['member_read'])]
+    #[Groups(['member_read', 'member_congregation_read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['member_read'])]
+    #[Groups(['member_read', 'member_congregation_read'])]
     private ?string $fullName = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['member_read'])]
+    #[Groups(['member_read', 'member_congregation_read'])]
     private ?DateTimeInterface $birthDate = null;
 
     #[ORM\Column(length: 100)]
-    #[Groups(['member_read'])]
+    #[Groups(['member_read', 'member_congregation_read'])]
     private ?string $telphone = null;
 
     #[ORM\Column]
-    #[Groups(['member_read'])]
+    #[Groups(['member_read', 'member_congregation_read'])]
     private ?bool $isBaptizedInWater = null;
 
     #[ORM\Column]
-    #[Groups(['member_read'])]
+    #[Groups(['member_read', 'member_congregation_read'])]
     private ?bool $isBaptizedInHolySpirit = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['member_read'])]
+    #[Groups(['member_read', 'member_congregation_read'])]
     private ?string $maritalStatus = null;
 
     #[ORM\ManyToOne(inversedBy: 'members')]
     #[MaxDepth(1)]
+    #[Groups(['member_congregation_read'])]
     private ?Congregation $congregation = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['member_read'])]
+    #[Groups(['member_read', 'member_congregation_read'])]
     private ?bool $isTither = null;
 
     #[ORM\Column]
-    #[Groups(['member_read'])]
+    #[Groups(['member_read', 'member_congregation_read'])]
     private ?DateTimeImmutable $createdAt = null;
 
     /**

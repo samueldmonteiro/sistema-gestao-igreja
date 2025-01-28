@@ -1,20 +1,31 @@
-import { AppBar, Toolbar, Typography } from '@mui/material'
+import { AppBar, IconButton, Toolbar, Typography } from '@mui/material'
 import IconLogo from '../../../assets/icone.jpg'
 import { Logo } from './styles'
+import MenuIcon from '@mui/icons-material/Menu';
+import { useState } from 'react';
 
-const Header = () => {
+const Header = ({setOpen}) => {
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
   return (
-    <AppBar
-      position="fixed"
-      sx={{
-        zIndex: (theme) => theme.zIndex.drawer + 1,
-        backgroundColor: "#ffffff",
-        color: "#1976d2",
-      }}
-    >
+    <AppBar position="fixed" open={open}>
       <Toolbar>
-        <Logo src={IconLogo}/>
-        <Typography noWrap component="div" sx={{fontWeight:'500', fontSize:'16px'}}>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={handleDrawerOpen}
+          edge="start"
+          sx={{
+            mr: 2,
+            ...(open && { display: 'none' }),
+          }}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" noWrap component="div">
           A. D. Campo da Ponte
         </Typography>
       </Toolbar>

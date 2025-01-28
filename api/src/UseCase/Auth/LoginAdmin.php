@@ -2,7 +2,7 @@
 
 namespace App\UseCase\Auth;
 
-use App\Repository\AdminRepository;
+use App\Contract\Repository\AdminRepositoryInterface;
 use App\Service\JwtService;
 use Samueldmonteiro\Result\Error;
 use Samueldmonteiro\Result\Result;
@@ -12,7 +12,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class LoginAdmin
 {
     public function __construct(
-        private AdminRepository $adminRepository,
+        private AdminRepositoryInterface $adminRepository,
         private UserPasswordHasherInterface $hasher,
         private JwtService $jwtService
     ) {}

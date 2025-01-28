@@ -3,3 +3,8 @@ register:
     path: register
     controller: App\Controller\Api\MemberController::register
     methods: [POST]
+
+all:
+    path: all
+    controller: App\Controller\Api\MemberController::all
+    methods: [GET]

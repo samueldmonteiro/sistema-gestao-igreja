@@ -10,7 +10,7 @@ class BaseController extends AbstractController
     protected function jsonError(array|Result $data, int $statusCode = 400, string $type = 'error')
     {
         if (is_array($data)) {
-            $dataMerged = array_merge(['error' => true, 'type' => $type], $data);
+            $dataMerged = array_merge(['error' => true, 'type' => $type, 'code' => $statusCode], $data);
             return $this->json($dataMerged, $statusCode);
         }
 
@@ -19,7 +19,8 @@ class BaseController extends AbstractController
                 'error' => true,
                 'message' => $data->getErrorMessage(),
                 'type' => $data->getErrorType() ?? $type,
-                'context' => !empty($data->getContext()) ? $data->getContext() : null
+                'context' => !empty($data->getContext()) ? $data->getContext() : null,
+                'code' => $data->getStatusCode() ?? $statusCode
             ],
             $data->getStatusCode() ?? $statusCode
         );

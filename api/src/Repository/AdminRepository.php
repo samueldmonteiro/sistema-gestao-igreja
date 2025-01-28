@@ -2,17 +2,15 @@
 
 namespace App\Repository;
 
+use App\Contract\Repository\AdminRepositoryInterface;
 use App\Entity\Admin;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
  * @extends ServiceEntityRepository<Admin>
  */
-class AdminRepository extends ServiceEntityRepository
+class AdminRepository extends ServiceEntityRepository implements AdminRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

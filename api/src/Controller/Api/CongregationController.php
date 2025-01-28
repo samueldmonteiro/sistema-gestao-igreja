@@ -3,13 +3,15 @@
 namespace App\Controller\Api;
 
 use App\UseCase\Congregation\CongregationRegister;
+use App\UseCase\Congregation\GetAllCongregations;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 final class CongregationController extends BaseController
 {
     public function __construct(
-        private CongregationRegister $congregationRegister
+        private CongregationRegister $congregationRegister,
+        private GetAllCongregations $getAllCongregations
     ) {}
 
     public function register(Request $request): JsonResponse
@@ -22,6 +24,19 @@ final class CongregationController extends BaseController
             return $this->jsonError($result);
         }
 
-        return $this->json(['congregation' => $result->getValue()]);
+        return $this->json(
+            ['congregation' => $result->getValue()],
+            context: ['json', 'groups' => ['congregation_read']],
+        );
+    }
+
+    public function all(): JsonResponse
+    {
+        $congregations = $this->getAllCongregations->execute();
+
+        return $this->json(
+            ['congregations' => $congregations],
+            context: ['json', 'groups' => ['congregation_read']]
+        );
     }
 }

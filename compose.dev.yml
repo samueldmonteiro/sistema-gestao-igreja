@@ -19,10 +19,10 @@ services:
       - igreja_AD_campo_da_ponte
 
     command: |
-      bash -c "[ ! -d 'vendor' ] && composer install && symfony serve --listen-ip=0.0.0.0 --port=8000 || symfony serve --listen-ip=0.0.0.0 --port=8000"
+      bash -c "[ ! -d 'vendor' ] && composer install && symfony serve --listen-ip=0.0.0.0 --port=8280 || symfony serve --listen-ip=0.0.0.0 --port=8280"
 
     ports:
-      - "127.0.0.1:8000:8000"
+      - "127.0.0.1:8280:8280"
 
   frontend:
     container_name: frontend

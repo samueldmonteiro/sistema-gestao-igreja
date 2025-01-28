@@ -1,9 +1,9 @@
-import { Button } from '@mui/material'
+import { Button as Btn } from '@mui/material'
 import React from 'react'
 
-const Buttom = ({ value, ...props }) => {
+const Button = ({ value, ...props }) => {
     return (
-        <Button
+        <Btn
             variant="contained"
             color="primary"
             {...props}
@@ -14,8 +14,8 @@ const Buttom = ({ value, ...props }) => {
             }}
         >
             {value}
-        </Button>
+        </Btn>
     )
 }
 
-export default Buttom
+export default Button;

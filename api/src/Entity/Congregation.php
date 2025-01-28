@@ -15,15 +15,15 @@ class Congregation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['congregation_read'])]
+    #[Groups(['congregation_read', 'member_congregation_read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['congregation_read'])]
+    #[Groups(['congregation_read', 'member_congregation_read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['congregation_read'])]
+    #[Groups(['congregation_read', 'member_congregation_read'])]
     private ?string $town = null;
 
     /**
@@ -48,7 +48,7 @@ class Congregation
     {
         $this->setName($name);
         $this->setTown($town);
-        
+
         $this->members = new ArrayCollection();
         $this->congregationOfferings = new ArrayCollection();
         $this->tithes = new ArrayCollection();

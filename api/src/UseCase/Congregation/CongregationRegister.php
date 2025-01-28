@@ -2,15 +2,15 @@
 
 namespace App\UseCase\Congregation;
 
+use App\Contract\Repository\CongregationRepositoryInterface;
 use App\Entity\Congregation;
-use App\Repository\CongregationRepository;
 use Exception;
 use Samueldmonteiro\Result\{Result, Success, Error};
 
 class CongregationRegister
 {
     public function __construct(
-        private CongregationRepository $congregationRepository,
+        private CongregationRepositoryInterface $congregationRepository,
     ) {}
 
     /**

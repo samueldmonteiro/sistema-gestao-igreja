@@ -37,7 +37,7 @@ class MemberRegisterTest extends KernelTestCase
     {
         $data = [
             "fullName" => "julia",
-            "birthDate" => "19/09/2004",
+            "birthDate" => "2004-09-02",
             "telphone" => "99999999999",
             "isBaptizedInWater" => true,
             "isBaptizedInHolySpirit" => true,
@@ -59,8 +59,14 @@ class MemberRegisterTest extends KernelTestCase
 
     private function createCongregationTest(): Congregation
     {
-        return $this->congregationRegister->execute(
+        $createCongregation = $this->congregationRegister->execute(
             ['name' => 'teste congregation', 'town' => 'local']
-        )->getValue();
+        );
+
+        if ($createCongregation->isError()) {
+            $this->fail($createCongregation->getErrorMessage());
+        }
+
+        return $createCongregation->getValue();
     }
 }

@@ -13,7 +13,7 @@ import { registerMember } from "../../../services/memberService";
 import useFetchData from "../../../hooks/useFetchData";
 import { getAllCongregations } from "../../../services/congregationService";
 import useMessageAlert from "../../../hooks/useMessageAlert";
-import Buttom from "../../../components/buttom";
+import Buttom from "../../../components/button";
 
 const NewMember = () => {
 

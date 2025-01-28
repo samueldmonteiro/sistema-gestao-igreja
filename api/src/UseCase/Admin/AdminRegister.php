@@ -2,18 +2,18 @@
 
 namespace App\UseCase\Admin;
 
+use App\Contract\Repository\AdminRepositoryInterface;
 use Exception;
 use DateTimeImmutable;
 use App\Entity\Admin;
 use App\Entity\ValueObject\Email;
-use App\Repository\AdminRepository;
 use Samueldmonteiro\Result\{Result, Success, Error};
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AdminRegister
 {
     public function __construct(
-        private AdminRepository $adminRepository,
+        private AdminRepositoryInterface $adminRepository,
         private UserPasswordHasherInterface $hasher
     ) {}
 

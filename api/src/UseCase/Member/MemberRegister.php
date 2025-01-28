@@ -2,9 +2,9 @@
 
 namespace App\UseCase\Member;
 
+use App\Contract\Repository\CongregationRepositoryInterface;
+use App\Contract\Repository\MemberRepositoryInterface;
 use App\Entity\Member;
-use App\Repository\CongregationRepository;
-use App\Repository\MemberRepository;
 use DateTimeImmutable;
 use Exception;
 use Samueldmonteiro\Result\{Result, Success, Error};
@@ -12,8 +12,8 @@ use Samueldmonteiro\Result\{Result, Success, Error};
 class MemberRegister
 {
     public function __construct(
-        private MemberRepository $memberRepository,
-        private CongregationRepository $congregationRepository
+        private MemberRepositoryInterface $memberRepository,
+        private CongregationRepositoryInterface $congregationRepository
     ) {}
 
     /**
@@ -60,6 +60,10 @@ class MemberRegister
             return new Error('O formato do telefone é inválido', 400);
         }
 
+        if($this->memberRepository->findByName($fullName)){
+            return new Error('Já existe um membro com esse Nome', 400);
+        }
+
         if (!is_numeric($congregationId)) {
             return new Error('O campo congregação está mal formado', 400);
         }
@@ -72,7 +76,7 @@ class MemberRegister
 
         $member = new Member(
             $fullName,
-            DateTimeImmutable::createFromFormat('d/m/Y', $birthDate),
+            DateTimeImmutable::createFromFormat('Y-m-d', $birthDate),
             $telphone,
             (bool) $isBaptizedInWater,
             (bool) $isBaptizedInHolySpirit,
@@ -90,7 +94,7 @@ class MemberRegister
         return new Success($member);
     }
 
-    private function validateBirthDate(string $birthdate, string $format = 'd/m/Y'): bool
+    private function validateBirthDate(string $birthdate, string $format = 'Y-m-d'): bool
     {
         $date = DateTimeImmutable::createFromFormat($format, $birthdate);
 

@@ -5,6 +5,7 @@ namespace App\UseCase\Member;
 use App\Contract\Repository\CongregationRepositoryInterface;
 use App\Contract\Repository\MemberRepositoryInterface;
 use App\Entity\Member;
+use App\Util\ValidateGenericData;
 use DateTimeImmutable;
 use Exception;
 use Samueldmonteiro\Result\{Result, Success, Error};
@@ -13,7 +14,8 @@ class MemberRegister
 {
     public function __construct(
         private MemberRepositoryInterface $memberRepository,
-        private CongregationRepositoryInterface $congregationRepository
+        private CongregationRepositoryInterface $congregationRepository,
+        private ValidateGenericData $validate
     ) {}
 
     /**
@@ -52,11 +54,11 @@ class MemberRegister
             );
         }
 
-        if (!$this->validateBirthDate($birthDate)) {
+        if (!$this->validate->validateBirthDate($birthDate)) {
             return new Error('A Data de nascimento tem um formato inválido', 400);
         }
 
-        if (!$this->validateTelphone($telphone)) {
+        if (!$this->validate->validateTelphone($telphone)) {
             return new Error('O formato do telefone é inválido', 400);
         }
 
@@ -92,22 +94,5 @@ class MemberRegister
         }
 
         return new Success($member);
-    }
-
-    private function validateBirthDate(string $birthdate, string $format = 'Y-m-d'): bool
-    {
-        $date = DateTimeImmutable::createFromFormat($format, $birthdate);
-
-        if (!$date || $date->format($format) !== $birthdate) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private function validateTelphone(string $telphone): bool
-    {
-        $telphoneFormatted = preg_replace('/\D/', '', $telphone);
-        return preg_match('/^\d{11}$/', $telphoneFormatted) === 1;
     }
 }

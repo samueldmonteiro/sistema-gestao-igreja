@@ -29,6 +29,11 @@ class MemberRepository extends ServiceEntityRepository implements MemberReposito
             ->getResult();
     }
 
+    public function findById(int $id): ?Member
+    {
+        return $this->findOneBy(['id' => $id]);
+    }
+
     public function findByFilters(array $filters): array
     {
         $qb = $this->createQueryBuilder('m'); // 'm' é o alias da entidade
@@ -79,6 +84,12 @@ class MemberRepository extends ServiceEntityRepository implements MemberReposito
     public function save(Member $member): void
     {
         $this->getEntityManager()->persist($member);
+        $this->getEntityManager()->flush();
+    }
+
+    public function delete(Member $member): void
+    {
+        $this->getEntityManager()->remove($member);
         $this->getEntityManager()->flush();
     }
 }

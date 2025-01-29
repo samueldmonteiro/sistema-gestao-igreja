@@ -8,3 +8,24 @@ all:
     path: all
     controller: App\Controller\Api\MemberController::all
     methods: [GET]
+
+find:
+    path: /{id}
+    controller: App\Controller\Api\MemberController::find
+    methods: [GET]
+    requirements:
+        id: '\d+'
+
+update:
+    path: /update/{id}
+    controller: App\Controller\Api\MemberController::update
+    methods: [PUT]
+    requirements:
+        id: '\d+'
+
+delete:
+    path: /delete/{id}
+    controller: App\Controller\Api\MemberController::delete
+    methods: [DELETE]
+    requirements:
+        id: '\d+'

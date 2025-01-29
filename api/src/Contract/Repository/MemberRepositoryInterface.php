@@ -10,5 +10,6 @@ interface MemberRepositoryInterface
     public function save(Member $member): void;
     public function getAll(): array;
     public function findByFilters(array $filters): array;
-
+    public function findById(int $id): ?Member;
+    public function delete(Member $member): void;
 }

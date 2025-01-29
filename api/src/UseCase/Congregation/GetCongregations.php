@@ -4,7 +4,7 @@ namespace App\UseCase\Congregation;
 
 use App\Contract\Repository\CongregationRepositoryInterface;
 
-class GetAllCongregations
+class GetCongregations
 {
     public function __construct(
         private CongregationRepositoryInterface $congregationRepository

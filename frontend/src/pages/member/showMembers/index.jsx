@@ -5,8 +5,6 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
-  Card,
-  CardContent,
   Typography,
   Box,
   CircularProgress,
@@ -17,8 +15,8 @@ import OptionsSideBar from "./optionsSideBar";
 import Button from "../../../components/button";
 import { getAllCongregations } from "../../../services/congregationService";
 import { getMembers } from "../../../services/memberService";
-import getAgeByDate from "../../../utils/getAgeByDate";
-
+import MemberListItem from "../../../components/memberListItem";
+import ModalMemberInfo from "./modalMemberInfo";
 
 const ShowMembers = () => {
   const [members, setMembers] = useState([]);
@@ -60,8 +58,20 @@ const ShowMembers = () => {
   };
 
 
+  const [openModal, setOpenModal] = useState(false);
+  const [currentMemberInfoId, setCurrentMemberInfoId] = useState(null);
+
+  const handleClickopenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
   return (
     <>
+      <ModalMemberInfo id={currentMemberInfoId} open={openModal} handleClose={handleCloseModal} />
       <Typography variant="h5" textAlign={'center'} mb={4}>
         Buscar Membros
       </Typography>
@@ -113,24 +123,12 @@ const ShowMembers = () => {
               </Grid>
               {!loadingMembers && <Box mt={4}>
                 {members.map((member) => (
-                  <Card key={member.id} sx={{ marginBottom: 3 }}>
-                    <CardContent style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                      <Typography variant="h6" style={{ fontWeight: "bold" }}>
-                        Nome: {member.fullName}
-                      </Typography>
-                      <Typography variant="body1" color="textSecondary">
-                        Idade: {getAgeByDate(member.birthDate)}
-                      </Typography>
-                      <Typography variant="body1" color="textSecondary">
-                        Congregação: {member.congregation.name}
-                      </Typography>
-                    </CardContent>
-                  </Card>
+                  <MemberListItem member={member} setOpenModal={handleClickopenModal} setCurrentMemberInfoId={setCurrentMemberInfoId}/>
                 ))}
               </Box>}
 
               {loadingMembers && <Box mt={4}>
-                <Box m={'auto'} pt={'30px'} sx={{ display: 'flex', justifyContent:'center'}}>
+                <Box m={'auto'} pt={'30px'} sx={{ display: 'flex', justifyContent: 'center' }}>
                   <CircularProgress size={60} />
                 </Box>
               </Box>}

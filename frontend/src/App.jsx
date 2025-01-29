@@ -25,7 +25,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 import NewMember from "./pages/member/newMember";
 import ShowMembers from "./pages/member/showMembers";
-
+import EditMember from './pages/member/editMember';
+import IconLogo from './assets/icone.png'
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -107,9 +108,13 @@ function DashBoard2() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              A. D. Campo da Ponte
-            </Typography>
+            <Box display='flex' alignItems={'center'}>
+              <img style={{ width: '50px', marginRight:'10px' }} src={IconLogo} alt="" />
+              <Typography variant="h6" noWrap component="div">
+                A. D. Campo da Ponte
+              </Typography>
+            </Box>
+
           </Toolbar>
         </AppBar>
         <Drawer
@@ -197,19 +202,22 @@ function DashBoard2() {
             </ListItem>
           </List>
         </Drawer>
-        <Main open={open}  sx={{
-            flexGrow: 1,
-            bgcolor: "#f9f9f9",
-            padding: 5,
-            transition: "margin-left 0.3s ease",
-            minHeight: '100vh'
-          }}
->
+        <Main open={open} sx={{
+          flexGrow: 1,
+          bgcolor: "#f9f9f9",
+          padding: 5,
+          transition: "margin-left 0.3s ease",
+          minHeight: '100vh'
+        }}
+        >
           <DrawerHeader />
           <Routes>
             <Route path="/inbox" element={<Typography variant="h4">Inbox Page</Typography>} />
+
+            {/** Members */}
             <Route path="/novo_membro" element={<NewMember />} />
             <Route path="/ver_membros" element={<ShowMembers />} />
+            <Route path="/editar_membro/:id" element={<EditMember />} />
           </Routes>
         </Main>
       </Box>

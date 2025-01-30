@@ -29,7 +29,7 @@ const OptionsSideBar = ({ onFilter }) => {
 
   const resetFilters = () => {
 
-    setFilters({ onlyTithers: false, baptizedSpit: false, baptizedWater: false, registrationDate: '' });
+    setFilters({ onlyTithers: false, baptizedSpit: false, baptizedWater: false, registrationDate: '', birthDate: '' });
 
     localStorage.setItem('onlyTithers', false);
     localStorage.setItem('baptizedSpit', false);
@@ -104,6 +104,7 @@ const OptionsSideBar = ({ onFilter }) => {
           onChange={handleChange}
           fullWidth
         />
+
         <Stack direction="row" spacing={2} mt={3}>
           <Button variant="contained" type='submit' onClick={handleApplyFilters} value='Aplicar' />
           <Button

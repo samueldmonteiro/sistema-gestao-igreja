@@ -71,7 +71,7 @@ const EditMember = () => {
     setOpenDeleteModal(false);
   };
 
-  if (!member.fullName || !congregations[0]) {
+  if (!member.congregation || !congregations[0]) {
     return (<Loading />);
   }
 

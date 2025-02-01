@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getAdminToken } from '../services/admin';
 
 console.log(import.meta.env.VITE_API_URL)
 const api = axios.create({
@@ -7,7 +8,7 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
     
-    const token = localStorage.getItem('token');
+    const token = getAdminToken();
 
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;

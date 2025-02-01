@@ -8,6 +8,7 @@ import {
   Select,
   InputLabel,
   FormControl,
+  Typography,
 } from "@mui/material";
 import { registerMember } from "../../../services/memberService";
 import useFetchData from "../../../hooks/useFetchData";
@@ -57,6 +58,7 @@ const NewMember = () => {
   }, [error, data]);
 
   return (
+    
     <Box component="form" onSubmit={handleSubmit} sx={{
       maxWidth: "600px",
       minHeight: '100vh',
@@ -68,7 +70,9 @@ const NewMember = () => {
       backgroundColor: "#f9f9f9",
       borderRadius: "8px",
     }}>
-
+<Typography variant="h6" sx={{fontWeight:'600', fontSize:'19px'}} textAlign={'center'} mb={4}>
+        NOVO MEMBRO
+      </Typography>
       {message}
 
       <TextField label="Nome Completo" name="fullName" value={formData.fullName} onChange={handleChange} fullWidth required />

@@ -72,13 +72,13 @@ const ShowMembers = () => {
   return (
     <>
       <ModalMemberInfo id={currentMemberInfoId} open={openModal} handleClose={handleCloseModal} />
-      <Typography variant="h5" textAlign={'center'} mb={4}>
-        Buscar Membros
-      </Typography>
+      <Typography variant="h6" sx={{fontWeight:'600', fontSize:'19px'}} textAlign={'center'} mb={4}>
+        BUSCAR MEMBROS
+        </Typography>
       <form>
 
         <Grid container spacing={4} sx={{ maxWidth: 900 }} m='auto'>
-          <Grid size={9}>
+          <Grid size={{ xs: 12, md:9, sm: 12 }}>
             <Box px={2}>
               <Grid container spacing={4}>
                 <Grid size={7}>
@@ -134,8 +134,8 @@ const ShowMembers = () => {
               </Box>}
             </Box >
           </Grid>
-          <Grid size={3}>
-            <OptionsSideBar />
+          <Grid size={{ xs: 12, md:3, sm: 9 }}>
+            <OptionsSideBar/>
           </Grid>
         </Grid >
       </form>

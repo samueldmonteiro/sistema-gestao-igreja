@@ -1,5 +1,15 @@
 
-login:
+login_admin:
     path: login/admin
     controller: App\Controller\Api\AuthController::loginAdmin
     methods: [POST]
+
+check:
+    path: check
+    controller: App\Controller\Api\AuthController::check
+    methods: [POST]
+
+get_user:
+    path: user
+    controller: App\Controller\Api\AuthController::getAuthUser
+    methods: [GET]

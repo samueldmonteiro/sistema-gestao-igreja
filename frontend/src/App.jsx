@@ -18,10 +18,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, BrowserRouter } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import PersonIcon from '@mui/icons-material/Person';
 import NewMember from "./pages/member/newMember";
@@ -31,6 +30,12 @@ import IconLogo from './assets/icone.png'
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { Avatar } from '@mui/material';
+import Login from './pages/admin/login';
+import { Logo } from './styles/globals';
+import { AuthProvider } from './context/AuthContext';
+import AdminRoute from './routes/protected/AdminRoute';
+
 const drawerWidth = 260;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -51,6 +56,8 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     }),
   })
 );
+
+
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -77,7 +84,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-function DashBoard2() {
+
+
+function MainApp() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const [membersMenuOpen, setMembersMenuOpen] = React.useState(false);
@@ -99,12 +108,16 @@ function DashBoard2() {
     setThiersMenuOpen(!thiersMenuOpen);
   };
 
+  const location = useLocation();
+  const hiddenHeaderRoutes = ['/acesso_restrito'];
+  const shouldShowHeader = !hiddenHeaderRoutes.includes(location.pathname);
+
   return (
-    <Router>
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="fixed" open={open}>
-          <Toolbar>
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      {shouldShowHeader && <AppBar position="fixed" open={open}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} >
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -117,139 +130,157 @@ function DashBoard2() {
             >
               <MenuIcon />
             </IconButton>
+
             <Box display='flex' alignItems={'center'}>
-              <img style={{ width: '50px', marginRight: '10px' }} src={IconLogo} alt="" />
+              <Logo src={IconLogo} />
               <Typography variant="h6" noWrap component="div">
                 A. D. Campo da Ponte
               </Typography>
             </Box>
+          </Box>
+          <Avatar>H</Avatar>
 
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          sx={{
+        </Toolbar>
+      </AppBar>}
+      {shouldShowHeader && <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
             width: drawerWidth,
-            flexShrink: 0,
-            '& .MuiDrawer-paper': {
-              width: drawerWidth,
-              boxSizing: 'border-box',
-            },
-          }}
-          variant="persistent"
-          anchor="left"
-          open={open}
-        >
-          <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-          <List>
-            <Typography m={'10px 0 10px 5px'} variant="subtitle2" sx={{ paddingLeft: 2 }}>
-              MEMBROS
-            </Typography>
-            <ListItemButton onClick={toggleMembersMenu}>
-              <ListItemIcon>
-                <PersonIcon color='primary' />
-              </ListItemIcon>
-              <ListItemText sx={{marginLeft:'-20px'}} primary="Gerenciar Membros" />
-              {membersMenuOpen ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-            <Collapse in={membersMenuOpen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }} component={Link} to="/ver_membros">
-                  <ListItemIcon>
-                    <VisibilityIcon color={'primary'} />
-                  </ListItemIcon>
-                  <ListItemText sx={{marginLeft:'-15px'}} primary="Ver Membros" />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }} component={Link} to="/novo_membro">
-                  <ListItemIcon>
-                    <PersonAddAlt1Icon color={'primary'} />
-                  </ListItemIcon>
-                  <ListItemText sx={{marginLeft:'-15px'}} primary="Novo Membro" />
-                </ListItemButton>
-              </List>
-            </Collapse>
-          </List>
-          <Divider />
-          <List>
-            <Typography m={'10px 0 10px 5px'} variant="subtitle2" sx={{ paddingLeft: 2 }}>
-              DÍZIMOS
-            </Typography>
-            <ListItemButton onClick={toggleThiersMenu}>
-              <ListItemIcon>
-                <PointOfSaleIcon color='primary' />
-              </ListItemIcon>
-              <ListItemText sx={{marginLeft:'-20px'}} primary="Gerenciar Dízimos" />
-              {thiersMenuOpen ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-            <Collapse in={thiersMenuOpen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }} component={Link} to="/ver_membros">
-                  <ListItemIcon>
-                    <VisibilityIcon color={'primary'} />
-                  </ListItemIcon>
-                  <ListItemText sx={{marginLeft:'-15px'}} primary="Ver Dízimos" />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }} component={Link} to="/novo_membro">
-                  <ListItemIcon>
-                    <AttachMoneyIcon color={'primary'} />
-                  </ListItemIcon>
-                  <ListItemText sx={{marginLeft:'-15px'}} primary="Novo Dízimo" />
-                </ListItemButton>
-              </List>
-            </Collapse>
-          </List>
-          <Divider />
-          <List>
-            <Typography variant="subtitle1" sx={{ paddingLeft: 2 }}>
-              MEMBROS
-            </Typography>
-            <ListItem disablePadding>
-              <ListItemButton component={Link} to="/ver_membros">
-                <ListItemIcon>
-                  <InboxIcon />
-                </ListItemIcon>
-                <ListItemText primary="Ver Membros" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton component={Link} to="/novo_membro">
-                <ListItemIcon>
-                  <InboxIcon />
-                </ListItemIcon>
-                <ListItemText primary="Novo Membro" />
-              </ListItemButton>
-            </ListItem>
-          </List>
-          <Divider />
-
-        </Drawer>
-        <Main open={open} sx={{
-          flexGrow: 1,
-          bgcolor: "#f9f9f9",
-          padding: 5,
-          transition: "margin-left 0.3s ease",
-          minHeight: '100vh',
-          position:'relative',
-          marginLeft: open ? '-50px' : ''
+            boxSizing: 'border-box',
+          },
         }}
-        >
-          <DrawerHeader />
-          <Routes>
-            <Route path="/inbox" element={<Typography variant="h4">Inbox Page</Typography>} />
+        variant="persistent"
+        anchor="left"
+        open={open}
+      >
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </DrawerHeader>
+        <Divider />
+        <List>
+          <Typography m={'10px 0 10px 5px'} variant="subtitle2" sx={{ paddingLeft: 2 }}>
+            MEMBROS
+          </Typography>
+          <ListItemButton onClick={toggleMembersMenu}>
+            <ListItemIcon>
+              <PersonIcon color='primary' />
+            </ListItemIcon>
+            <ListItemText sx={{ marginLeft: '-20px' }} primary="Gerenciar Membros" />
+            {membersMenuOpen ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={membersMenuOpen} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/ver_membros">
+                <ListItemIcon>
+                  <VisibilityIcon color={'primary'} />
+                </ListItemIcon>
+                <ListItemText sx={{ marginLeft: '-15px' }} primary="Ver Membros" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/novo_membro">
+                <ListItemIcon>
+                  <PersonAddAlt1Icon color={'primary'} />
+                </ListItemIcon>
+                <ListItemText sx={{ marginLeft: '-15px' }} primary="Novo Membro" />
+              </ListItemButton>
+            </List>
+          </Collapse>
+        </List>
+        <Divider />
+        <List>
+          <Typography m={'10px 0 10px 5px'} variant="subtitle2" sx={{ paddingLeft: 2 }}>
+            DÍZIMOS
+          </Typography>
+          <ListItemButton onClick={toggleThiersMenu}>
+            <ListItemIcon>
+              <PointOfSaleIcon color='primary' />
+            </ListItemIcon>
+            <ListItemText sx={{ marginLeft: '-20px' }} primary="Gerenciar Dízimos" />
+            {thiersMenuOpen ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={thiersMenuOpen} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/ver_membros">
+                <ListItemIcon>
+                  <VisibilityIcon color={'primary'} />
+                </ListItemIcon>
+                <ListItemText sx={{ marginLeft: '-15px' }} primary="Ver Dízimos" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/novo_membro">
+                <ListItemIcon>
+                  <AttachMoneyIcon color={'primary'} />
+                </ListItemIcon>
+                <ListItemText sx={{ marginLeft: '-15px' }} primary="Novo Dízimo" />
+              </ListItemButton>
+            </List>
+          </Collapse>
+        </List>
+        <Divider />
+        <List>
+          <Typography variant="subtitle1" sx={{ paddingLeft: 2 }}>
+            MEMBROS
+          </Typography>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/ver_membros">
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Ver Membros" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/novo_membro">
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Novo Membro" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+        <Divider />
 
-            {/** Members */}
-            <Route path="/novo_membro" element={<NewMember />} />
-            <Route path="/ver_membros" element={<ShowMembers />} />
-            <Route path="/editar_membro/:id" element={<EditMember />} />
-          </Routes>
-        </Main>
-      </Box>
-    </Router>
+      </Drawer>}
+      <Main open={open} sx={{
+        flexGrow: 1,
+        bgcolor: "#f9f9f9",
+        padding: 5,
+        transition: "margin-left 0.3s ease",
+        minHeight: '100vh',
+        position: 'relative',
+        marginLeft: open ? '-15px' : ''
+      }}
+      >
+        <DrawerHeader />
+        <Routes>
+          <Route path="/inbox" element={<Typography variant="h4">Inbox Page</Typography>} />
+
+          {/** Members */}
+          <Route path="/novo_membro" element={<AdminRoute><NewMember /></AdminRoute>} />
+          <Route path="/ver_membros" element={<ShowMembers />} />
+          <Route path="/editar_membro/:id" element={<EditMember />} />
+
+          {/** Admin */}
+          <Route path="/acesso_restrito" element={<Login />} />
+
+        </Routes>
+      </Main>
+    </Box>
   );
 }
 
-export default DashBoard2;
+function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <MainApp />
+
+      </AuthProvider>
+    </BrowserRouter>
+  );
+}
+
+
+export default App;

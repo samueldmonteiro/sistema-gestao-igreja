@@ -10,5 +10,5 @@ interface CongregationRepositoryInterface
     public function findByName(string $name): ?Congregation;
     public function findById(int $id): ?Congregation;
     public function getAll(): array;
-
+    public function findAllWithTithesSum(?int $limit=null): array;
 }

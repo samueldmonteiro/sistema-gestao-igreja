@@ -54,9 +54,9 @@ class MemberRegister
             );
         }
 
-        if (!$this->validate->validateBirthDate($birthDate)) {
-            return new Error('A Data de nascimento tem um formato inválido', 400);
-        }
+       # if (!$this->validate->validateDate($birthDate)) {
+       #     return new Error('A Data de nascimento tem um formato inválido', 400);
+      #  }
 
         if (!$this->validate->validateTelphone($telphone)) {
             return new Error('O formato do telefone é inválido', 400);

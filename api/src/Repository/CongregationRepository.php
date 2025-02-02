@@ -37,4 +37,34 @@ class CongregationRepository extends ServiceEntityRepository implements Congrega
         $this->getEntityManager()->persist($congregation);
         $this->getEntityManager()->flush();
     }
+
+    public function findAllWithTithesSum(?int $limit = null): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $dql = "
+            SELECT 
+                c.id, 
+                c.name, 
+                c.town, 
+                SUM(t.value) AS totalTithes
+            FROM 
+                App\Entity\Congregation c
+            LEFT JOIN 
+                c.tithes t
+            GROUP BY 
+                c.id
+            ORDER BY 
+                totalTithes DESC
+        ";
+
+        if (!$limit) {
+            return $entityManager->createQuery($dql)
+                ->getResult();
+        }
+
+        return $entityManager->createQuery($dql)
+            ->setMaxResults($limit)
+            ->getResult();
+    }
 }

@@ -1,0 +1,9 @@
+register:
+    path: /register
+    controller: App\Controller\Api\TitheController::register
+    methods: [POST]
+
+all:
+    path: /all
+    controller: App\Controller\Api\TitheController::all
+    methods: [GET]

@@ -39,11 +39,12 @@ class UpdateMember
         $isBaptizedInHolySpirit = $data->isBaptizedInHolySpirit ?? false;
         $maritalStatus = trim($data->maritalStatus ?? '');
         $congregationId = trim($data->congregation ?? '');
+        
         if ($fullName) {
             $member->setFullName($fullName);
         }
 
-        if ($birthDate && !$this->validate->validateBirthDate($birthDate)) {
+        if (!$birthDate) {
             return new Error('Data de Nascimento tem um formato inválido', 400);
         }
 

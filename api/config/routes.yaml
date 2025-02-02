@@ -27,3 +27,9 @@ member:
     type: yaml
     prefix: api/member
     name_prefix: member_
+
+tithe:
+    resource: routes/api/tithe.yaml
+    type: yaml
+    prefix: api/tithe
+    name_prefix: tithe_

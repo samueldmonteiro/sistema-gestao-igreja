@@ -6,11 +6,11 @@ use DateTimeImmutable;
 
 class ValidateGenericData
 {
-    public function validateBirthDate(string $birthdate, string $format = 'Y-m-d'): bool
+    public function validateDate(string $date, string $format = 'Y-m-d'): bool
     {
-        $date = DateTimeImmutable::createFromFormat($format, $birthdate);
+        $dateFormatted = DateTimeImmutable::createFromFormat($format, $date);
 
-        if (!$date || $date->format($format) !== $birthdate) {
+        if (!$dateFormatted || $dateFormatted->format($format) !== $dateFormatted) {
             return false;
         }
         return true;

@@ -76,6 +76,7 @@ class MemberRepository extends ServiceEntityRepository implements MemberReposito
 
         return $qb->getQuery()->getResult();
     }
+    
     public function findByName(string $name): ?Member
     {
         return $this->findOneBy(['fullName' => $name]);

@@ -20,21 +20,20 @@ import Collapse from '@mui/material/Collapse';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation, BrowserRouter } from 'react-router-dom';
+import { Link, useLocation, BrowserRouter } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import PersonIcon from '@mui/icons-material/Person';
-import NewMember from "./pages/member/newMember";
-import ShowMembers from "./pages/member/showMembers";
-import EditMember from './pages/member/editMember';
 import IconLogo from './assets/icone.png'
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { Avatar } from '@mui/material';
-import Login from './pages/admin/login';
 import { Logo } from './styles/globals';
 import { AuthProvider } from './context/AuthContext';
-import AdminRoute from './routes/protected/AdminRoute';
+import MainRoutes from './routes/routes';
+import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import PaidIcon from '@mui/icons-material/Paid';
+import { Home } from '@mui/icons-material';
 
 const drawerWidth = 260;
 
@@ -56,8 +55,6 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     }),
   })
 );
-
-
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -91,6 +88,8 @@ function MainApp() {
   const [open, setOpen] = React.useState(true);
   const [membersMenuOpen, setMembersMenuOpen] = React.useState(false);
   const [thiersMenuOpen, setThiersMenuOpen] = React.useState(false);
+  const [offeringsMenuOpen, setOfferingsMenuOpen] = React.useState(false);
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -106,6 +105,10 @@ function MainApp() {
 
   const toggleThiersMenu = () => {
     setThiersMenuOpen(!thiersMenuOpen);
+  };
+
+  const toggleOfferingsMenu = () => {
+    setOfferingsMenuOpen(!offeringsMenuOpen);
   };
 
   const location = useLocation();
@@ -162,6 +165,18 @@ function MainApp() {
         </DrawerHeader>
         <Divider />
         <List>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/">
+              <ListItemIcon>
+                <Home color='primary' />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItemButton>
+          </ListItem>
+        
+        </List>
+        <Divider />
+        <List>
           <Typography m={'10px 0 10px 5px'} variant="subtitle2" sx={{ paddingLeft: 2 }}>
             MEMBROS
           </Typography>
@@ -174,7 +189,7 @@ function MainApp() {
           </ListItemButton>
           <Collapse in={membersMenuOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/ver_membros">
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/membros">
                 <ListItemIcon>
                   <VisibilityIcon color={'primary'} />
                 </ListItemIcon>
@@ -203,13 +218,13 @@ function MainApp() {
           </ListItemButton>
           <Collapse in={thiersMenuOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/ver_membros">
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/dizimos">
                 <ListItemIcon>
                   <VisibilityIcon color={'primary'} />
                 </ListItemIcon>
                 <ListItemText sx={{ marginLeft: '-15px' }} primary="Ver Dízimos" />
               </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/novo_membro">
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/novo_dizimo">
                 <ListItemIcon>
                   <AttachMoneyIcon color={'primary'} />
                 </ListItemIcon>
@@ -220,6 +235,34 @@ function MainApp() {
         </List>
         <Divider />
         <List>
+          <Typography m={'10px 0 10px 5px'} variant="subtitle2" sx={{ paddingLeft: 2 }}>
+            OFERTAS
+          </Typography>
+          <ListItemButton onClick={toggleOfferingsMenu}>
+            <ListItemIcon>
+              <LocalAtmIcon color='primary' />
+            </ListItemIcon>
+            <ListItemText sx={{ marginLeft: '-20px' }} primary="Gerenciar Ofertas" />
+            {offeringsMenuOpen ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={offeringsMenuOpen} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/ofertas">
+                <ListItemIcon>
+                  <VisibilityIcon color={'primary'} />
+                </ListItemIcon>
+                <ListItemText sx={{ marginLeft: '-15px' }} primary="Ver Ofertas" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/nova_oferta">
+                <ListItemIcon>
+                  <PaidIcon color={'primary'} />
+                </ListItemIcon>
+                <ListItemText sx={{ marginLeft: '-15px' }} primary="Nova Oferta" />
+              </ListItemButton>
+            </List>
+          </Collapse>
+        </List>
+        {null && <List>
           <Typography variant="subtitle1" sx={{ paddingLeft: 2 }}>
             MEMBROS
           </Typography>
@@ -239,14 +282,14 @@ function MainApp() {
               <ListItemText primary="Novo Membro" />
             </ListItemButton>
           </ListItem>
-        </List>
+        </List>}
         <Divider />
 
       </Drawer>}
       <Main open={open} sx={{
         flexGrow: 1,
         bgcolor: "#f9f9f9",
-        padding: 5,
+        padding: 4,
         transition: "margin-left 0.3s ease",
         minHeight: '100vh',
         position: 'relative',
@@ -254,18 +297,8 @@ function MainApp() {
       }}
       >
         <DrawerHeader />
-        <Routes>
-          <Route path="/inbox" element={<Typography variant="h4">Inbox Page</Typography>} />
-
-          {/** Members */}
-          <Route path="/novo_membro" element={<AdminRoute><NewMember /></AdminRoute>} />
-          <Route path="/ver_membros" element={<ShowMembers />} />
-          <Route path="/editar_membro/:id" element={<EditMember />} />
-
-          {/** Admin */}
-          <Route path="/acesso_restrito" element={<Login />} />
-
-        </Routes>
+        {/** Routes */}
+        <MainRoutes />
       </Main>
     </Box>
   );
@@ -284,3 +317,4 @@ function App() {
 
 
 export default App;
+// 327

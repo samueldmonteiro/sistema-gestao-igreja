@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { getAdminToken, removeAdminToken } from "../services/admin";
 import { useNavigate } from "react-router-dom";
 import { getUser, verifyToken } from "../services/auth";
+import Loading from "../pages/loading";
 
 export const AuthContext = createContext();
 
@@ -38,7 +39,7 @@ export const AuthProvider = ({ children }) => {
             }
             try {
                 const response = await getUser();
-                setAdmin(response.user);
+                setAdmin(response.data.user);
             } catch {}
 
             setIsLogged(true);
@@ -50,7 +51,7 @@ export const AuthProvider = ({ children }) => {
     }, [navigate]);
 
     if (loadingAuth) {
-        return (<h1>Aguarde...</h1>)
+        return (<Loading/>)
     }
 
     return (

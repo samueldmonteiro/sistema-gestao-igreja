@@ -16,4 +16,3 @@ export const setAdminToken = (token) => {
 export const removeAdminToken = () => {
     return localStorage.removeItem('tokenAdmin');
 }
-

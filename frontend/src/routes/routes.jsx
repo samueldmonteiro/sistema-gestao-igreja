@@ -11,6 +11,7 @@ import { Box, Typography } from '@mui/material'
 import Home from '../pages/home'
 import NewCongregation from '../pages/congregation/newCongregation'
 import NewOffering from '../pages/congregation/offering/newOffering'
+import ShowOfferinigs from '../pages/congregation/offering/showOfferings'
 
 const MainRoutes = () => {
   return (
@@ -31,11 +32,12 @@ const MainRoutes = () => {
         <Route path="/dizimos" element={<AdminRoute><ShowTithes /></AdminRoute>} />
 
         {/** Congregation Offerings */}
-        <Route path="/ofertas" element={<Typography variant="h5">Estará funcionando em Breve!</Typography>} />
-        <Route path="/nova_oferta" element={<AdminRoute><NewOffering /></AdminRoute>} />
+        <Route path="/congregacao/ofertas" element={<AdminRoute><ShowOfferinigs /></AdminRoute>} />
+        <Route path="/congregacao/nova_oferta" element={<AdminRoute><NewOffering /></AdminRoute>} />
 
         {/** Congregations */}
         <Route path="/nova_congregacao" element={<AdminRoute><NewCongregation /></AdminRoute>} />
+
 
       </Routes>
     </Box>

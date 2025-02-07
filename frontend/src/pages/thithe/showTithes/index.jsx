@@ -110,7 +110,7 @@ const ShowTithes = () => {
               </Grid>
               {!loadingTithes && <Box mt={4}>
                 {tithes.map((tithe) => (
-                  <TitheListItem tithe={tithe} />
+                  <TitheListItem tithe={tithe} tithes={tithes} setTithes={setTithes} setCountTithes={setCountTithes}/>
                 ))}
               </Box>}
 

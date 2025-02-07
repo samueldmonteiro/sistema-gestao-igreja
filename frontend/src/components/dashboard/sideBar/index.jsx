@@ -66,8 +66,8 @@ const menuItems = [
     toggle: "congregationsMenuOpen",
     subItems: [
       { title: "Nova Congregação", icon: <OtherHousesIcon />, path: "/nova_congregacao" },
-      { title: "Ver Ofertas", icon: <VisibilityIcon />, path: "/ofertas" },
-      { title: "Nova Oferta", icon: <PaidIcon />, path: "/nova_oferta" },
+      { title: "Ver Ofertas", icon: <VisibilityIcon />, path: "/congregacao/ofertas" },
+      { title: "Nova Oferta", icon: <PaidIcon />, path: "/congregacao/nova_oferta" },
     ]
   }
 ];

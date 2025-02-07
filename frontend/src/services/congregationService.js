@@ -20,3 +20,10 @@ export const registerCongregation = async (congregationData) => {
     const response = await api.post('/congregation/register', congregationData);
     return response;
 }
+
+export const getCongregationsWithTotalOfferings = async () => {
+    const response = await api.get('/congregation/offering/total');
+    return response;
+}
+
+

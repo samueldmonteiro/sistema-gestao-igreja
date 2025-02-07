@@ -9,3 +9,8 @@ export const getTithes = async (params) => {
     const response = await api.get('tithe/all', { params });
     return response;
 }
+
+export const deleteTithe = async (id) => {
+    const response = await api.delete('tithe/delete/' + id);
+    return response;
+}

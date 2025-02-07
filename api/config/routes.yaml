@@ -6,30 +6,30 @@ controllers:
 
 auth:
     resource: routes/api/auth.yaml
-    type: yaml
     prefix: api/auth
     name_prefix: auth_
 
 admin:
     resource: routes/api/admin.yaml
-    type: yaml
     prefix: api/admin
     name_prefix: admin_
 
 congregation:
     resource: routes/api/congregation.yaml
-    type: yaml
     prefix: api/congregation
     name_prefix: congregation_
 
+congregation_offerings:
+    resource: routes/api/congregation_offerings.yaml
+    prefix: api/congregation/offering/
+    name_prefix: congregation_offering_
+
 member:
     resource: routes/api/member.yaml
-    type: yaml
     prefix: api/member
     name_prefix: member_
 
 tithe:
     resource: routes/api/tithe.yaml
-    type: yaml
     prefix: api/tithe
     name_prefix: tithe_

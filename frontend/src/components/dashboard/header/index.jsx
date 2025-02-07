@@ -16,7 +16,7 @@ import Logout from '@mui/icons-material/Logout';
 import { AuthContext } from '../../../context/AuthContext';
 import { useContext, useState } from 'react';
 import styled from 'styled-components';
-
+import { logout } from '../../../services/auth';
 
 export const AdminName = styled.span`
   @media (max-width: 850px){
@@ -37,8 +37,13 @@ const Header = ({ open, handleDrawerOpen }) => {
     setAnchorEl(null);
   };
 
+  const handleLogout = () => {
+    logout();
+    window.location.href = '/acesso_restrito'
+  }
+
   return (
-    <AppBar position="fixed" open={open} sx={{padding: '0 15px'}}>
+    <AppBar position="fixed" open={open} sx={{ padding: '0 15px' }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} >
           <IconButton
@@ -121,7 +126,7 @@ const Header = ({ open, handleDrawerOpen }) => {
 
 
             <MenuItem onClick={handleClose}>
-              <strong style={{fontSize: '15px'}}>{admin.position + ' ' + admin.name}</strong>
+              <strong style={{ fontSize: '15px' }}>{admin.position + ' ' + admin.name}</strong>
             </MenuItem>
             <Divider />
             <MenuItem onClick={handleClose}>
@@ -130,7 +135,7 @@ const Header = ({ open, handleDrawerOpen }) => {
               </ListItemIcon>
               Configurações
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={handleLogout}>
               <ListItemIcon>
                 <Logout fontSize="small" />
               </ListItemIcon>

@@ -1,0 +1,28 @@
+register:
+    path: /register
+    methods: [POST]
+    controller: App\Controller\Api\CongregationOfferingController::register
+
+all:
+    path: /all
+    methods: [GET]
+    controller: App\Controller\Api\CongregationOfferingController::all
+
+total:
+    path: /total
+    methods: [GET]
+    controller: App\Controller\Api\CongregationOfferingController::total
+
+update:
+    path: /update/{id}
+    controller: App\Controller\Api\CongregationOfferingController::update
+    methods: [PUT]
+    requirements:
+        id: '\d+'
+
+delete:
+    path: /delete/{id}
+    controller: App\Controller\Api\CongregationOfferingController::delete
+    methods: [DELETE]
+    requirements:
+        id: '\d+'

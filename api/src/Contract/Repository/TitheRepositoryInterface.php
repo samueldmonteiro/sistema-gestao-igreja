@@ -10,4 +10,5 @@ interface TitheRepositoryInterface
     public function getByFilters(array $filters): array;
     public function delete(Tithe $tithe): void;
     public function findById(int $id): ?Tithe;
+
 }

@@ -35,7 +35,7 @@ const ShowTithes = () => {
     setLoadingTithes(true);
     const urlParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlParams.entries());
-   
+
     getTithes(params).then(resp => {
       setTithes(resp.data.tithes);
       setCountTithes(resp.data.qt);
@@ -66,7 +66,7 @@ const ShowTithes = () => {
       <form>
 
         <Grid container spacing={4} sx={{ maxWidth: 900 }} m='auto'>
-          <Grid size={{ xs: 12, md: 9, sm: 12 }}>
+          <Grid size={{ xs: 12, md: 8, sm: 12 }}>
             <Box px={2}>
               <Grid container spacing={4}>
                 <Grid size={7}>
@@ -121,7 +121,7 @@ const ShowTithes = () => {
               </Box>}
             </Box >
           </Grid>
-          <Grid size={{ xs: 12, md: 3, sm: 9 }}>
+          <Grid size={{ xs: 12, md: 4, sm: 12 }}>
             <TitheFilters />
           </Grid>
         </Grid >

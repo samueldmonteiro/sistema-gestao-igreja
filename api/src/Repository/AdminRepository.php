@@ -17,6 +17,17 @@ class AdminRepository extends ServiceEntityRepository implements AdminRepository
         parent::__construct($registry, Admin::class);
     }
 
+    public function findById(int $id): ?Admin
+    {
+        return $this->findOneBy(['id' => $id]);
+    }
+
+    public function delete(Admin $admin): void
+    {
+        $this->getEntityManager()->remove($admin);
+        $this->getEntityManager()->flush();
+    }
+
     public function save(Admin $admin): void
     {
         $this->getEntityManager()->persist($admin);

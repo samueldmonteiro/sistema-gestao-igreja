@@ -22,12 +22,10 @@ class AdminRegister
      */
     public function execute(array $data): Result
     {
-        $data = (object) $data;
-
-        $name = trim($data->name ?? '');
-        $email = trim($data->email ?? '');
-        $position = trim($data->position ?? '');
-        $password = trim($data->password ?? '');
+        $name = trim($data['name'] ?? '');
+        $email = trim($data['email'] ?? '');
+        $position = trim($data['position'] ?? '');
+        $password = trim($data['password'] ?? '');
 
         if (empty($name) || empty($email) || empty($position) || empty($password)) {
             return new Error('Preencha todos os campos corretamente', 400, null, [

@@ -79,10 +79,10 @@ const ShowMembers = () => {
       <form>
 
         <Grid container spacing={4} sx={{ maxWidth: 900 }} m='auto'>
-          <Grid size={{ xs: 12, md: 9, sm: 12 }}>
+          <Grid size={{ xs: 12, md: 8, sm: 12 }}>
             <Box px={2}>
               <Grid container spacing={4}>
-                <Grid size={7}>
+                <Grid size={{ xs: 12, sm: 7, md: 7 }}>
                   <TextField
                     name="name"
                     label="Pesquisar por nome"
@@ -91,7 +91,7 @@ const ShowMembers = () => {
                     value={searchName}
                     onChange={handlePesquisa} />
                 </Grid>
-                <Grid size={5} >
+                <Grid size={{ xs: 12, sm: 5, md: 5 }} >
                   <FormControl fullWidth variant='filled'>
                     <InputLabel id="congregacao-label">Congregação</InputLabel>
                     <Select
@@ -135,7 +135,7 @@ const ShowMembers = () => {
               </Box>}
             </Box >
           </Grid>
-          <Grid size={{ xs: 12, md: 3, sm: 9 }}>
+          <Grid size={{ xs: 12, md: 4, sm: 12 }}>
             <OptionsSideBar />
           </Grid>
         </Grid >

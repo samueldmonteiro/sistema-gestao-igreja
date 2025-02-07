@@ -50,6 +50,7 @@ class Member
     #[ORM\ManyToOne(inversedBy: 'members')]
     #[MaxDepth(1)]
     #[Groups(['member_congregation_read'])]
+    #[ORM\JoinColumn(onDelete: 'SET NULL', nullable: true)]
     private ?Congregation $congregation = null;
 
     #[ORM\Column(nullable: true)]

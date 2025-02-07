@@ -41,8 +41,10 @@ security:
     access_control:
             - { path: ^/api/admin/, roles: ROLE_IS_ADMIN }
             - { path: ^/api/auth/check, roles: ROLE_IS_ADMIN }
-            - { path: ^/api/auth/user, roles: ROLE_USER }
-
+            - { path: ^/api/member/, roles: ROLE_IS_ADMIN }
+            - { path: ^/api/congregation/, roles: ROLE_IS_ADMIN }
+            - { path: ^/api/tithe/, roles: ROLE_IS_ADMIN }
+            - { path: ^/api/offering/, roles: ROLE_IS_ADMIN }
 when@test:
     security:
         password_hashers:

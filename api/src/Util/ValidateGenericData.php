@@ -9,11 +9,7 @@ class ValidateGenericData
     public function validateDate(string $date, string $format = 'Y-m-d'): bool
     {
         $dateFormatted = DateTimeImmutable::createFromFormat($format, $date);
-
-        if (!$dateFormatted || $dateFormatted->format($format) !== $dateFormatted) {
-            return false;
-        }
-        return true;
+        return $dateFormatted !== false && $dateFormatted->format($format) === $date;
     }
 
     public function validateTelphone(string $telphone): bool

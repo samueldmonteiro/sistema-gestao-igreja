@@ -43,7 +43,6 @@ class LoginAdminTest extends KernelTestCase
         }
 
         $token = $result->getValue();
-
         $this->assertNotEmpty($token);
     }
 

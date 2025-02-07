@@ -15,3 +15,8 @@ export const getTop3CongregationsWithTotalTithes = async () => {
     const response = await api.get('/congregation/total_tithes', { params });
     return response;
 }
+
+export const registerCongregation = async (congregationData) => {
+    const response = await api.post('/congregation/register', congregationData);
+    return response;
+}

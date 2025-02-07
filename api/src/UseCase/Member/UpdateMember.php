@@ -44,7 +44,7 @@ class UpdateMember
             $member->setFullName($fullName);
         }
 
-        if (!$birthDate) {
+        if (!$this->validate->validateDate($birthDate)) {
             return new Error('Data de Nascimento tem um formato inválido', 400);
         }
 

@@ -23,12 +23,16 @@ class TitheRepository extends ServiceEntityRepository implements TitheRepository
         $this->getEntityManager()->flush();
     }
 
+    public function findById(int $id): ?Tithe
+    {
+        return $this->findOneBy(['id' => $id]);
+    }
+
     public function getByFilters(array $filters): array
     {
         $qb = $this->createQueryBuilder('t')
-            ->innerJoin('t.theMember', 'm')
-            ->innerJoin('t.congregation', 'c');
-
+            ->leftJoin('t.theMember', 'm')  // Alterado para LEFT JOIN
+            ->leftJoin('t.congregation', 'c'); 
 
         if ($filters['memberName']) {
             $qb->andWhere('LOWER(m.fullName) LIKE LOWER(:memberName)')
@@ -40,19 +44,22 @@ class TitheRepository extends ServiceEntityRepository implements TitheRepository
                 ->setParameter('congregationId', $filters['congregationId']);
         }
 
-
-        if (!empty($filters['date'])) {
-            $qb->andWhere('t.date = :date')
-                ->setParameter('date', $filters['date']);
+        if (!empty($filters['startDate'])) {
+            $qb->andWhere('t.date >= :startDate')
+                ->setParameter('startDate', new \DateTime($filters['startDate']));
         }
 
-        /** 
-        if (!empty($filters['date'])) {
-            $qb->andWhere('t.date BETWEEN :startDate AND :endDate')
-                ->setParameter('startDate', $filters['date'])
-                ->setParameter('endDate', new \DateTime()); // Data atual
-        }**/
+        if (!empty($filters['endDate'])) {
+            $qb->andWhere('t.date <= :endDate')
+                ->setParameter('endDate', new \DateTime($filters['endDate']));
+        }
 
-        return $qb->getQuery()->getResult();
+        return $qb->orderBy('t.id', 'DESC')->getQuery()->getResult();
+    }
+
+    public function delete(Tithe $tithe): void
+    {
+        $this->getEntityManager()->remove($tithe);
+        $this->getEntityManager()->flush();
     }
 }

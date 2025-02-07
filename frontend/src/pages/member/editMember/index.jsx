@@ -31,7 +31,7 @@ const EditMember = () => {
 
     getMemberById(id).then(resp => {
       setMember({
-        ...resp.data.member, congregation: resp.data.member.congregation.id,
+        ...resp.data.member, congregation: resp.data?.member?.congregation?.id,
         birthDate: formatDate(resp.data.member.birthDate, 'yyyy-MM-dd')
       });
     });
@@ -71,7 +71,7 @@ const EditMember = () => {
     setOpenDeleteModal(false);
   };
 
-  if (!member.congregation || !congregations[0]) {
+  if (!member || !congregations[0]) {
     return (<Loading />);
   }
 

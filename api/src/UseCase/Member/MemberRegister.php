@@ -54,15 +54,15 @@ class MemberRegister
             );
         }
 
-       # if (!$this->validate->validateDate($birthDate)) {
-       #     return new Error('A Data de nascimento tem um formato inválido', 400);
-      #  }
+        if (!$this->validate->validateDate($birthDate)) {
+            return new Error('A Data de nascimento tem um formato inválido', 400);
+        }
 
         if (!$this->validate->validateTelphone($telphone)) {
             return new Error('O formato do telefone é inválido', 400);
         }
 
-        if($this->memberRepository->findByName($fullName)){
+        if ($this->memberRepository->findByName($fullName)) {
             return new Error('Já existe um membro com esse Nome', 400);
         }
 

@@ -16,6 +16,7 @@ class CongregationOffering
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'congregationOfferings')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL', nullable: true)]
     private ?Congregation $congregation = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]

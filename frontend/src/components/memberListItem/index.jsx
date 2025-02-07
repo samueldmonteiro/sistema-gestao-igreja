@@ -1,37 +1,46 @@
-import { Box, Card, CardContent, Typography } from '@mui/material'
-import React from 'react'
-import getAgeByDate from '../../utils/getAgeByDate'
-import Button from '../button'
+import { Box, Card, CardContent, Typography, Button } from '@mui/material';
+import React from 'react';
 import InfoIcon from '@mui/icons-material/Info';
+import getAgeByDate from '../../utils/getAgeByDate';
 
 const MemberListItem = ({ member, setOpenModal, setCurrentMemberInfoId }) => {
-
-
-  const handleClick = ()=>{
+  
+  const handleClick = () => {
     setOpenModal();
     setCurrentMemberInfoId(member.id);
-  }
-  return (
-    <Card key={member.id} sx={{ marginBottom: 3 }}>
-      <CardContent style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-        <Typography variant="h6" style={{ fontWeight: "bold" }}>
-          Nome: {member.fullName}
-        </Typography>
-        <Typography variant="body1" color="textSecondary">
-          Idade: {getAgeByDate(member.birthDate)}
-        </Typography>
-        <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'} flexWrap={'wrap'}>
-          <Typography variant="body1" color="textSecondary">
-            Congregação: {member.congregation.name}
-          </Typography>
-          <Box>
-            <Button onClick={handleClick} variant='outlined' style={{fontSize: '12px'}} startIcon={<InfoIcon  />} value="Ver Mais" />
-          </Box>
-        </Box>
+  };
 
+  return (
+    <Card key={member.id} sx={{ mb: 2, borderRadius: 2, boxShadow: 3 }}>
+      <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+        <Typography variant="h6" fontWeight="bold">
+          {member.fullName}
+        </Typography>
+        <Typography mb={'-10px'} variant="body2" color="text.secondary">
+          Idade: {getAgeByDate(member.birthDate)} anos
+        </Typography>
+        <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
+          <Typography variant="body2" color="text.secondary">
+            Congregação: {member?.congregation?.name ?? 'Não encontrado'}
+          </Typography>
+          <Button 
+            onClick={handleClick} 
+            variant="contained" 
+            size="small"
+            startIcon={<InfoIcon />}
+            sx={{
+              marginTop:'8px',
+              fontSize: '12px',
+              textTransform: 'none',
+              borderRadius: 2
+            }}
+          >
+            Ver Mais
+          </Button>
+        </Box>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default MemberListItem
+export default MemberListItem;

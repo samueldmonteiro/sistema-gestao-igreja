@@ -47,6 +47,8 @@ class RegisterTithe
         );
 
         $this->titheRepository->save($tithe);
+        $member->setIsTither(true);
+        $this->memberRepository->save($member);
 
         return new Success($tithe);
     }
@@ -69,9 +71,9 @@ class RegisterTithe
             ]);
         }
 
-       # if (!$this->validate->validateDate($date)) {
-        #    return new Error('A Data do dízimo tem um formato inválido', 400);
-        #}
+        if (!$this->validate->validateDate($date)) {
+            return new Error('A Data do dízimo tem um formato inválido', 400);
+        }
 
         if (!is_numeric($congregationId)) {
             return new Error('Congregação não encontrada', 404);

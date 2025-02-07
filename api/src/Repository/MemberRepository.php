@@ -71,12 +71,18 @@ class MemberRepository extends ServiceEntityRepository implements MemberReposito
 
         if (!empty($filters['birthDate'])) {
             $qb->andWhere('m.birthDate = :birthDate')
-                ->setParameter('birthDate', $filters['birthDate']);
+                ->setParameter('birthDate', new \DateTime($filters['birthDate']));
         }
 
-        return $qb->getQuery()->getResult();
+        if (!empty($filters['monthBirthDate'])) {
+            $month = $filters['monthBirthDate']; // O valor do mês, por exemplo: '02', '07', '12'
+            $qb->andWhere('m.birthDate LIKE :month')
+                ->setParameter('month', '%-' . $month . '-%');
+        }
+        
+        return $qb->orderBy('m.id', 'DESC')->getQuery()->getResult();
     }
-    
+
     public function findByName(string $name): ?Member
     {
         return $this->findOneBy(['fullName' => $name]);

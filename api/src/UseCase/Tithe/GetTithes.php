@@ -2,7 +2,6 @@
 
 namespace App\UseCase\Tithe;
 
-use App\Contract\Repository\CongregationRepositoryInterface;
 use App\Contract\Repository\TitheRepositoryInterface;
 
 class GetTithes
@@ -11,13 +10,14 @@ class GetTithes
         private TitheRepositoryInterface $titheRepository,
     ) {}
 
-    public function execute(array $params)
+    public function execute(array $params): array
     {
         $filters = [
             'value' => $params['value'] ?? null,
-            'date' => $params['date'] ?? null,
             'congregationId' => $params['congregationId'] ?? null,
-            'memberName' => $params['memberName'] ?? null
+            'memberName' => $params['memberName'] ?? null,
+            'startDate' => $params['startDate'] ?? null,
+            'endDate' => $params['endDate'] ?? null,
         ];
 
         return $this->titheRepository->getByFilters($filters);

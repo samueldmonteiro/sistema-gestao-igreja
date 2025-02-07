@@ -28,7 +28,8 @@ const Login = () => {
     if (data && !error) {
       showMessage('Login Efetuado com Sucesso!', 'success');
       setAdminToken(data.token);
-      setTimeout(() => window.location.href = '/', 700);
+      setTimeout(() => window.location.href = '/', 300);
+      console.log(data);
     }
 
   }, [error, data]);

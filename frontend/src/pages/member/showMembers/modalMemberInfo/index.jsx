@@ -1,6 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Button from '../../../../components/button';
-import { Dialog, DialogActions, DialogContent, DialogTitle, Slide, Card, CardContent, Typography, Grid2 as Grid } from '@mui/material';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Slide,
+  Card,
+  CardContent,
+  Typography,
+  Stack,
+  IconButton
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { getMemberById } from '../../../../services/memberService';
 import getAgeByDate from '../../../../utils/getAgeByDate';
 import formatDate from '../../../../utils/formatDate';
@@ -17,6 +29,7 @@ const ModalMemberInfo = ({ open, handleClose, id }) => {
     if (open) {
       getMemberById(id).then((resp) => {
         setMember(resp.data.member);
+        console.log(resp.data.member)
       });
     }
   }, [open, id]);
@@ -26,73 +39,42 @@ const ModalMemberInfo = ({ open, handleClose, id }) => {
       open={open}
       TransitionComponent={Transition}
       keepMounted
-      maxWidth="sm"
+      maxWidth="xs" // Melhor responsividade
       fullWidth
       onClose={handleClose}
-      aria-describedby="alert-dialog-slide-description"
     >
-      <DialogTitle>Informações do Membro</DialogTitle>
+      <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        Informações do Membro
+        <IconButton onClick={handleClose} size="small">
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
       <DialogContent>
         {member ? (
-          <Card variant="outlined" sx={{ p: 2, borderRadius: 2, boxShadow: 3 }}>
+          <Card variant="outlined" sx={{ p: 2, borderRadius: 2, boxShadow: 1 }}>
             <CardContent>
-              <Grid container spacing={2}>
-                <Grid item size={12}>
-                  <Typography variant="h6" gutterBottom>
-                    Nome: {member.fullName}
-                  </Typography>
-                </Grid>
-                <Grid item size={6}>
-                  <Typography variant="body1">
-                    <strong>Telefone:</strong> {member.telphone}
-                  </Typography>
-                </Grid>
-
-                <Grid item size={6}>
-                  <Typography variant="body1">
-                    <strong>Idade:</strong> {getAgeByDate(member.birthDate)} anos
-                  </Typography>
-                </Grid>
-                <Grid item size={6}>
-                  <Typography variant="body1">
-                    <strong>Batizado no E. Santo:</strong> {member.isBaptizedInTheHolySpirit ? 'Sim' : 'Não'}
-                  </Typography>
-                </Grid>
-                <Grid item size={6}>
-                  <Typography variant="body1">
-                    <strong>Batizado nas Águas:</strong> {member.isBaptizedInWater ? 'Sim' : 'Não'}
-                  </Typography>
-                </Grid>
-                <Grid item size={6}>
-                  <Typography variant="body1">
-                    <strong>Estado Civil:</strong> {member.maritalStatus}
-                  </Typography>
-                </Grid>
-                <Grid item size={6}>
-                  <Typography variant="body1">
-                    <strong>Congregação:</strong> {member.congregation.name}
-                  </Typography>
-                </Grid>
-                <Grid item size={6}>
-                  <Typography variant="body1">
-                    <strong>É Dizimista:</strong> {member.isTither ? 'Sim' : 'Não'}
-                  </Typography>
-                </Grid>
-                <Grid item size={6}>
-                  <Typography variant="body1">
-                    <strong>Data de Nascimento:</strong> {formatDate(member.birthDate)}
-                  </Typography>
-                </Grid>
-              </Grid>
+              <Stack spacing={2}>
+                <Typography variant="h6" align="center">{member.fullName}</Typography>
+                <Stack spacing={1}>
+                  <Typography variant="body2"><strong>Telefone:</strong> {member.telphone}</Typography>
+                  <Typography variant="body2"><strong>Idade:</strong> {getAgeByDate(member.birthDate)} anos</Typography>
+                  <Typography variant="body2"><strong>Batizado no E. Santo:</strong> {member.isBaptizedInHolySpirit ? 'Sim' : 'Não'}</Typography>
+                  <Typography variant="body2"><strong>Batizado nas Águas:</strong> {member.isBaptizedInWater ? 'Sim' : 'Não'}</Typography>
+                  <Typography variant="body2"><strong>Estado Civil:</strong> {member.maritalStatus}</Typography>
+                  <Typography variant="body2"><strong>Congregação:</strong> {member?.congregation?.name ?? 'Não encontrada'}</Typography>
+                  <Typography variant="body2"><strong>É Dizimista:</strong> {member.isTither ? 'Sim' : 'Não'}</Typography>
+                  <Typography variant="body2"><strong>Data de Nascimento:</strong> {formatDate(member.birthDate)}</Typography>
+                </Stack>
+              </Stack>
             </CardContent>
           </Card>
         ) : (
-          <Typography variant="body1">Carregando informações...</Typography>
+          <Typography variant="body1" align="center">Carregando informações...</Typography>
         )}
       </DialogContent>
       <DialogActions>
-        <Link to={"/editar_membro/" + id}>
-          <Button value="Editar" />
+        <Link to={`/editar_membro/${id}`} style={{ width: '100%' }}>
+          <Button value="Editar" fullWidth />
         </Link>
       </DialogActions>
     </Dialog>

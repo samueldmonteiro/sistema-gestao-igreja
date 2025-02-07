@@ -21,10 +21,10 @@ class GetMembers
             'registrationDate' => $params['registrationDate'] ?? null,
             'birthDate' => $params['birthDate'] ?? null,
             'isBaptizedWater' => ($params['isBaptizedWater'] ?? null) ? true : false,
-            'isBaptizedSpirit' => ($params['isBaptizedSpirit'] ?? null) ? true : false
+            'isBaptizedSpirit' => ($params['isBaptizedSpirit'] ?? null) ? true : false,
+            'monthBirthDate' => $params['monthBirthDate'] ?? null,
         ];
 
         return $this->memberRepository->findByFilters($filters);
-
     }
 }

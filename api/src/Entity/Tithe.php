@@ -19,11 +19,13 @@ class Tithe
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'tithes')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL', nullable: true)]
     #[Groups(['tithe_member_congregation_read'])]
     private ?Member $theMember = null;
 
     #[ORM\ManyToOne(inversedBy: 'tithes')]
     #[Groups(['tithe_member_congregation_read'])]
+    #[ORM\JoinColumn(onDelete: 'SET NULL', nullable: true)]
     private ?Congregation $congregation = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]

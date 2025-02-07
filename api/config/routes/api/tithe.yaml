@@ -3,6 +3,13 @@ register:
     controller: App\Controller\Api\TitheController::register
     methods: [POST]
 
+delete:
+    path: /delete/{id}
+    controller: App\Controller\Api\TitheController::delete
+    methods: [DELETE]
+    requirements:
+        id: '\d+'
+
 all:
     path: /all
     controller: App\Controller\Api\TitheController::all

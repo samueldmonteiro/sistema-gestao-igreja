@@ -38,7 +38,7 @@ class CongregationRegister
         try {
             $this->congregationRepository->save($congregation);
         } catch (Exception $e) {
-            return new Error('Erro ao cadastrar Congregação', 500, context: ['msg' => $e->getMessage()]);
+            return new Error('Erro ao cadastrar Congregação', 500, context: ['error' => $e->getMessage()]);
         }
 
         return new Success($congregation);

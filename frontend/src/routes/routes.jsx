@@ -7,33 +7,39 @@ import Login from '../pages/admin/login'
 import EditMember from '../pages/member/editMember'
 import NewMember from '../pages/member/newMember'
 import ShowMembers from '../pages/member/showMembers'
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import Home from '../pages/home'
+import NewCongregation from '../pages/congregation/newCongregation'
+import NewOffering from '../pages/congregation/offering/newOffering'
 
 const MainRoutes = () => {
-    return (
-        <Routes>
-            <Route path="/" element={<AdminRoute><Home/></AdminRoute>} />
+  return (
+    <Box mb={'35px'}>
+      <Routes >
+        <Route path="/" element={<AdminRoute><Home /></AdminRoute>} />
 
-            {/** Members */}
-            <Route path="/novo_membro" element={<AdminRoute><NewMember /></AdminRoute>} />
-            <Route path="/membros" element={<AdminRoute><ShowMembers /></AdminRoute>} />
-            <Route path="/editar_membro/:id" element={<AdminRoute><EditMember /></AdminRoute>} />
+        {/** Members */}
+        <Route path="/novo_membro" element={<AdminRoute><NewMember /></AdminRoute>} />
+        <Route path="/membros" element={<AdminRoute><ShowMembers /></AdminRoute>} />
+        <Route path="/editar_membro/:id" element={<AdminRoute><EditMember /></AdminRoute>} />
 
-            {/** Admin */}
-            <Route path="/acesso_restrito" element={<Login />} />
+        {/** Admin */}
+        <Route path="/acesso_restrito" element={<Login />} />
 
-            {/** Thiers */}
-            <Route path="/novo_dizimo" element={<AdminRoute><NewTithe /></AdminRoute>} />
-            <Route path="/dizimos" element={<AdminRoute><ShowTithes /></AdminRoute>} />
+        {/** Thiers */}
+        <Route path="/novo_dizimo" element={<AdminRoute><NewTithe /></AdminRoute>} />
+        <Route path="/dizimos" element={<AdminRoute><ShowTithes /></AdminRoute>} />
 
-            {/** Offerings */}
-            <Route path="/ofertas" element={<Typography variant="h5">Estará funcionando em Breve!</Typography>} />
-            <Route path="/nova_oferta" element={<Typography variant="h5">Estará funcionando em Breve!</Typography>} />
+        {/** Congregation Offerings */}
+        <Route path="/ofertas" element={<Typography variant="h5">Estará funcionando em Breve!</Typography>} />
+        <Route path="/nova_oferta" element={<AdminRoute><NewOffering /></AdminRoute>} />
 
+        {/** Congregations */}
+        <Route path="/nova_congregacao" element={<AdminRoute><NewCongregation /></AdminRoute>} />
 
-        </Routes>
-    )
+      </Routes>
+    </Box>
+  )
 }
 
 export default MainRoutes

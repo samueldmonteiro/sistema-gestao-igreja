@@ -5,16 +5,16 @@ import { getMembers } from '../../services/memberService';
 import { getAllCongregations, getCongregationsWithTotalTithes, getTop3CongregationsWithTotalTithes } from '../../services/congregationService';
 import { getTithes } from '../../services/titheService';
 import Loading from '../loading';
+import formatValueToBRL from '../../utils/formatValueToBRL';
 
 const Home = () => {
-  // Dados fictícios para o exemplo
   const totalOfferings = 0;
 
-  const [totalMembers, setTotalMembers] = useState(0);
-  const [totalCongregations, setTotalCongregations] = useState(0);
-  const [totalTithes, setTotalTithes] = useState(0);
-  const [congregationTithesData, setCongregationTithesData] = useState([]);
-  const [congregationTableData, setCongregationTableData] = useState([]);
+  const [totalMembers, setTotalMembers] = useState(null);
+  const [totalCongregations, setTotalCongregations] = useState(null);
+  const [totalTithes, setTotalTithes] = useState(null);
+  const [congregationTithesData, setCongregationTithesData] = useState(null);
+  const [congregationTableData, setCongregationTableData] = useState(null);
 
   useEffect(() => {
     getMembers().then(resp => {
@@ -35,10 +35,9 @@ const Home = () => {
     });
 
     getCongregationsWithTotalTithes().then(resp => {
-      console.log(resp)
       let congregations = [];
       resp.data.congregations.forEach((congregation) => {
-        congregations.push({ name: congregation.name, tithes: congregation.totalTithes })
+        congregations.push({ name: congregation.name, tithes: congregation.totalTithes, dizimos: congregation.totalTithes })
       });
 
       console.log(congregations);
@@ -46,19 +45,20 @@ const Home = () => {
     });
 
     getTop3CongregationsWithTotalTithes().then(resp => {
-      console.log(resp)
       let congregations = [];
       resp.data.congregations.forEach((congregation) => {
         congregations.push({ name: congregation.name, tithes: congregation.totalTithes })
       });
 
-      console.log(congregations);
+      console.log(congregations)
       setCongregationTableData(congregations);
     });
 
   }, []);
 
-  if(!congregationTithesData || !totalTithes) return (<Loading/>)
+  if (congregationTithesData == null || !congregationTableData == null || totalMembers == null || totalCongregations == null || totalTithes == null) {
+    return (<Loading />)
+  }
 
   return (
     <Box sx={{ flexGrow: 1, padding: 2 }}>
@@ -86,7 +86,7 @@ const Home = () => {
           <Card>
             <CardContent>
               <Typography variant="h6" fontSize={19}>Total de Dízimos:</Typography>
-              <Typography variant="h5">{`R$ ${totalTithes}`}</Typography>
+              <Typography variant="h5">{formatValueToBRL(totalTithes)}</Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -95,7 +95,7 @@ const Home = () => {
           <Card>
             <CardContent>
               <Typography variant="h6" fontSize={19}>Total de Ofertas:</Typography>
-              <Typography variant="h5">{`R$ ${totalOfferings}`}</Typography>
+              <Typography variant="h5">{formatValueToBRL(totalOfferings)}</Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -112,7 +112,7 @@ const Home = () => {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="tithes" fill="#3f51b5" />
+                  <Bar dataKey="dizimos" fill="#3f51b5" />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
@@ -133,10 +133,10 @@ const Home = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {congregationTableData.map((congregation, index) => (
+                    {congregationTableData && congregationTableData.map((congregation, index) => (
                       <tr key={index}>
                         <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{congregation.name}</td>
-                        <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{`R$ ${congregation.tithes}`}</td>
+                        <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{formatValueToBRL(congregation.tithes)}</td>
                       </tr>
                     ))}
                   </tbody>

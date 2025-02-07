@@ -67,4 +67,10 @@ class CongregationRepository extends ServiceEntityRepository implements Congrega
             ->setMaxResults($limit)
             ->getResult();
     }
+
+    public function delete(Congregation $congregation): void
+    {
+        $this->getEntityManager()->remove($congregation);
+        $this->getEntityManager()->flush();
+    }
 }

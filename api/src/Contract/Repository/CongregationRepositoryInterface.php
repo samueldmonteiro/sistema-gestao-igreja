@@ -11,4 +11,5 @@ interface CongregationRepositoryInterface
     public function findById(int $id): ?Congregation;
     public function getAll(): array;
     public function findAllWithTithesSum(?int $limit=null): array;
+    public function delete(Congregation $congregation): void;
 }

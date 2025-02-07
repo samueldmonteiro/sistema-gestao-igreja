@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Controller\Api\BaseController;
+use App\UseCase\Tithe\DeleteTithe;
 use App\UseCase\Tithe\GetTithes;
 use App\UseCase\Tithe\RegisterTithe;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,7 +13,8 @@ final class TitheController extends BaseController
 {
     public function __construct(
         private RegisterTithe $registerTithe,
-        private GetTithes $getTithes
+        private GetTithes $getTithes,
+        private DeleteTithe $deleteTithe
     ) {}
 
     public function register(Request $r): JsonResponse
@@ -44,5 +46,16 @@ final class TitheController extends BaseController
             ],
             context: ['json', 'groups' => ['tithe_member_congregation_read']]
         );
+    }
+
+    public function delete(int $id): JsonResponse
+    {
+        $result = $this->deleteTithe->execute($id);
+
+        if ($result->isError()) {
+            return $this->jsonError($result);
+        }
+
+        return $this->json(['message' => 'Dízimo removida com sucesso']);
     }
 }

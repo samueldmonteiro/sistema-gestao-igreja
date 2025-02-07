@@ -3,6 +3,20 @@ register:
     methods: [POST]
     controller: App\Controller\Api\CongregationController::register
 
+update:
+    path: /update/{id}
+    controller: App\Controller\Api\CongregationController::update
+    methods: [PUT]
+    requirements:
+        id: '\d+'
+
+delete:
+    path: /delete/{id}
+    controller: App\Controller\Api\CongregationController::delete
+    methods: [DELETE]
+    requirements:
+        id: '\d+'       
+
 all:
     path: /all
     methods: [GET]

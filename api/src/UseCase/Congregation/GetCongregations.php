@@ -13,6 +13,5 @@ class GetCongregations
     public function execute(): array
     {
         return $this->congregationRepository->getAll();
-    }
-        
+    }   
 }

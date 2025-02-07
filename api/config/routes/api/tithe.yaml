@@ -10,6 +10,12 @@ delete:
     requirements:
         id: '\d+'
 
+
+total_with_congregations:
+    path: /total
+    methods: [GET]
+    controller: App\Controller\Api\TitheController::totalWithCongregations
+
 all:
     path: /all
     controller: App\Controller\Api\TitheController::all

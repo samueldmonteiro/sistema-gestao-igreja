@@ -32,7 +32,7 @@ class TitheRepository extends ServiceEntityRepository implements TitheRepository
     {
         $qb = $this->createQueryBuilder('t')
             ->leftJoin('t.theMember', 'm')  // Alterado para LEFT JOIN
-            ->leftJoin('t.congregation', 'c'); 
+            ->leftJoin('t.congregation', 'c');
 
         if ($filters['memberName']) {
             $qb->andWhere('LOWER(m.fullName) LIKE LOWER(:memberName)')
@@ -56,6 +56,17 @@ class TitheRepository extends ServiceEntityRepository implements TitheRepository
 
         return $qb->orderBy('t.id', 'DESC')->getQuery()->getResult();
     }
+
+    public function getTotalWithCongregations(): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select('c.id, c.name, SUM(o.value) AS totalTithes')
+            ->join('o.congregation', 'c')
+            ->groupBy('c.id')
+            ->getQuery()
+            ->getResult();
+    }
+
 
     public function delete(Tithe $tithe): void
     {

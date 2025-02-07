@@ -6,6 +6,7 @@ use App\Controller\Api\BaseController;
 use App\UseCase\Tithe\DeleteTithe;
 use App\UseCase\Tithe\GetTithes;
 use App\UseCase\Tithe\RegisterTithe;
+use App\UseCase\Tithe\TotalTithesWithCongregations;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -14,7 +15,8 @@ final class TitheController extends BaseController
     public function __construct(
         private RegisterTithe $registerTithe,
         private GetTithes $getTithes,
-        private DeleteTithe $deleteTithe
+        private DeleteTithe $deleteTithe,
+        private TotalTithesWithCongregations $totalTithesWithCongregations
     ) {}
 
     public function register(Request $r): JsonResponse
@@ -57,5 +59,14 @@ final class TitheController extends BaseController
         }
 
         return $this->json(['message' => 'Dízimo removida com sucesso']);
+    }
+
+    public function totalWithCongregations(Request $r)
+    {
+        $params = $r->query->all();
+
+        $result = $this->totalTithesWithCongregations->execute($params);
+
+        return $this->json(['congregations' => $result]);
     }
 }

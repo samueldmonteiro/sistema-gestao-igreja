@@ -80,7 +80,7 @@ final class CongregationOfferingController extends BaseController
         );
     }
 
-    public function total(Request $r)
+    public function totalWithCongregations(Request $r)
     {
         $params = $r->query->all();
 

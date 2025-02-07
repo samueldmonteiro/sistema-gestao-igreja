@@ -13,8 +13,8 @@ const Home = () => {
   const [totalCongregations, setTotalCongregations] = useState(null);
   const [totalTithes, setTotalTithes] = useState(null);
   const [totalOfferings, setTotalOfferings] = useState(null);
-  const [congregationTithesData, setCongregationTithesData] = useState(null);
-  const [congregationOfferingsData, setCongregationOfferingsData] = useState(null);
+  const [congregationTithesData, setCongregationTithesData] = useState([]); // Inicializado como array vazio
+  const [congregationOfferingsData, setCongregationOfferingsData] = useState([]); // Inicializado como array vazio
 
   useEffect(() => {
     getMembers().then(resp => {
@@ -42,23 +42,25 @@ const Home = () => {
     });
 
     getCongregationsWithTotalTithes().then(resp => {
-      let congregations = [];
-      resp.data.congregations.forEach((congregation) => {
-        congregations.push({ name: congregation.name, Dizimos: congregation.totalTithes });
-      });
+      // Garantir que os dados estejam no formato correto
+      const congregations = resp.data.congregations.map(congregation => ({
+        name: congregation.name || 'Sem nome', // Fallback para nomes ausentes
+        tithes: parseFloat(congregation.totalTithes) || 0, // Fallback para valores ausentes ou inválidos
+      }));
       setCongregationTithesData(congregations);
     });
 
     getCongregationsWithTotalOfferings().then(resp => {
-      let congregations = [];
-      resp.data.congregations.forEach((congregation) => {
-        congregations.push({ name: congregation.name, Ofertas: congregation.total_offerings });
-      });
+      // Garantir que os dados estejam no formato correto
+      const congregations = resp.data.congregations.map(congregation => ({
+        name: congregation.name || 'Sem nome', // Fallback para nomes ausentes
+        offerings: parseFloat(congregation.total_offerings) || 0, // Fallback para valores ausentes ou inválidos
+      }));
       setCongregationOfferingsData(congregations);
     });
   }, []);
 
-  if (congregationTithesData == null || congregationOfferingsData == null || totalMembers == null || totalCongregations == null || totalTithes == null || totalOfferings == null) {
+  if (totalMembers == null || totalCongregations == null || totalTithes == null || totalOfferings == null) {
     return (<Loading />);
   }
 
@@ -112,10 +114,10 @@ const Home = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
                   <YAxis />
-                  <Tooltip />
+                  <Tooltip formatter={(value) => formatValueToBRL(value)} />
                   <Legend />
-                  <Bar dataKey="Dizimos" fill="#3f51b5" />
-                </BarChart>
+                  <Bar dataKey="tithes" fill="#3f51b5" />
+                </BarChart> {/* Corrected closing tag */}
               </ResponsiveContainer>
             </CardContent>
           </Card>
@@ -131,9 +133,9 @@ const Home = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
                   <YAxis />
-                  <Tooltip />
+                  <Tooltip formatter={(value) => formatValueToBRL(value)} />
                   <Legend />
-                  <Bar dataKey="Ofertas" fill="#82ca9d" />
+                  <Bar dataKey="offerings" fill="#82ca9d" />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
@@ -154,7 +156,7 @@ const Home = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {congregationTithesData && congregationTithesData.map((congregation, index) => (
+                    {congregationTithesData.map((congregation, index) => (
                       <tr key={index}>
                         <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{congregation.name}</td>
                         <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{formatValueToBRL(congregation.tithes)}</td>
@@ -181,7 +183,7 @@ const Home = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {congregationOfferingsData && congregationOfferingsData.map((congregation, index) => (
+                    {congregationOfferingsData.map((congregation, index) => (
                       <tr key={index}>
                         <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{congregation.name}</td>
                         <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{formatValueToBRL(congregation.offerings)}</td>

@@ -6,7 +6,7 @@ export const getAllCongregations = async () => {
 }
 
 export const getCongregationsWithTotalTithes = async () => {
-    const response = await api.get('/congregation/total_tithes');
+    const response = await api.get('/tithe/total');
     return response;
 }
 

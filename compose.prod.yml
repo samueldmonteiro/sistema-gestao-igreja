@@ -86,21 +86,6 @@ services:
       ports:
         - "127.0.0.1:3308:3306"
 
-  redis:
-    image: redis:7.4.1
-    container_name: redis
-    ports:
-      - "127.0.0.1:6379:6379" 
-    volumes:
-      - redis_data:/data 
-    restart: always 
-    environment:
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
-    networks:
-      - igreja_AD_campo_da_ponte
-    command: ["sh", "-c", "redis-server --requirepass $REDIS_PASSWORD"]
-
-
 networks:
   igreja_AD_campo_da_ponte:
     driver: bridge

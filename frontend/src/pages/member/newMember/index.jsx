@@ -86,6 +86,7 @@ const NewMember = () => {
         NOVO MEMBRO
       </Typography>
       {message}
+      <br/>
 
       <TextField
         label="Nome Completo"

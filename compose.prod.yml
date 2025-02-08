@@ -71,7 +71,7 @@ services:
       restart: unless-stopped
 
       volumes:
-        - db_data:/var/lib/mysql
+        - db_tests_data:/var/lib/mysql
 
       environment:
         - MYSQL_DATABASE=${DB_DATABASE}
@@ -91,4 +91,4 @@ networks:
 
 volumes:
   db_data:
-  redis_data:
+  db_tests_data:

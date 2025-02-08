@@ -14,7 +14,6 @@ services:
 
     depends_on:
       - db
-      - redis
     networks:
       - igreja_AD_campo_da_ponte
 

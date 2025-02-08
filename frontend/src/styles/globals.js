@@ -1,7 +1,7 @@
-import {styled as styledMain} from "styled-components";
+import { styled as styledMain } from "styled-components";
 import { useTheme } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
-import { styled} from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 export const Logo = styledMain.img`
     width: 45px;
@@ -25,6 +25,10 @@ export const DrawerHeader = styled('div')(({ }) => {
   }
 });
 
+const hiddenHeaderRoutes = ['/acesso_restrito'];
+const currentPath = window.location.pathname;
+const shouldShowHeader = !hiddenHeaderRoutes.includes(currentPath);
+
 export const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     flexGrow: 1,
@@ -33,7 +37,7 @@ export const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: `-${drawerWidth}px`,
+    marginLeft: shouldShowHeader ? `-${drawerWidth}px` : '',
     ...(open && {
       transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.easeOut,

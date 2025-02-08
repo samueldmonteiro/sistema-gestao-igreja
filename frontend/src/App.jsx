@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useLocation, BrowserRouter } from 'react-router-dom';
-import { DrawerHeader, Main } from './styles/globals';
+import { DrawerHeader, drawerWidth, Main } from './styles/globals';
 import { AuthProvider } from './context/AuthContext';
 import MainRoutes from './routes/routes';
 import Header from './components/dashboard/header';
@@ -41,8 +41,9 @@ console.log('oi')
         transition: "margin-left 0.3s ease",
         minHeight: '100vh',
         position: 'relative',
-        marginLeft: open ? '-15px' : '',
-        paddingBottom: '0px'
+       
+        marginLeft: open ? '-10px' : '',
+        paddingBottom: '0px',
       }}
       >
         <DrawerHeader />

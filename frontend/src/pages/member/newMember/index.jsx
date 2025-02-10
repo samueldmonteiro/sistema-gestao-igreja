@@ -70,7 +70,7 @@ const NewMember = () => {
         boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
         backgroundColor: "#ffffff",
         margin: '0 auto',
-        marginBottom:'50px',
+        marginBottom: '50px',
       }}
     >
       <Typography
@@ -86,7 +86,7 @@ const NewMember = () => {
         NOVO MEMBRO
       </Typography>
       {message}
-      <br/>
+      <br />
 
       <TextField
         label="Nome Completo"

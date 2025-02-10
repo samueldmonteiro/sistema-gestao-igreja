@@ -19,7 +19,7 @@ const FooterElement = styled.footer`
 const Footer = () => {
     return (
         <FooterElement>
-            Criado por <a target='_blank' href='http://google.com'>Samuel Davi</a>
+            Criado por <a target='_blank' href='https://api.whatsapp.com/send?phone=5598970051778&text=Ol%C3%A1,%20quero%20criar%20um%20site!'>Samuel Davi</a>
         </FooterElement>
     )
 }

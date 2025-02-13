@@ -81,7 +81,7 @@ const Header = ({ open, handleDrawerOpen }) => {
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
               >
-                <Avatar sx={{ width: 38, height: 38 }}>{admin.name[0]}</Avatar>
+                <Avatar sx={{ width: 38, height: 38 }}>{admin?.name[0]}</Avatar>
 
               </IconButton>
             </Tooltip>
@@ -126,7 +126,7 @@ const Header = ({ open, handleDrawerOpen }) => {
 
 
             <MenuItem onClick={handleClose}>
-              <strong style={{ fontSize: '15px' }}>{admin.position + ' ' + admin.name}</strong>
+              <strong style={{ fontSize: '15px' }}>{admin.position + ' ' + admin?.name}</strong>
             </MenuItem>
             <Divider />
             <MenuItem onClick={handleClose}>

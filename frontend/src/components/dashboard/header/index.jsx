@@ -70,7 +70,7 @@ const Header = ({ open, handleDrawerOpen }) => {
 
         <Box >
           <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-            <AdminName>{admin.position + ' ' + admin.name}</AdminName>
+            <AdminName>{admin?.position + ' ' + admin?.name}</AdminName>
 
             <Tooltip title="Account settings">
               <IconButton

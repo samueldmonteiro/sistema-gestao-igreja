@@ -41,7 +41,6 @@ console.log('oi')
         transition: "margin-left 0.3s ease",
         minHeight: '100vh',
         position: 'relative',
-       
         marginLeft: open ? '-10px' : '',
         paddingBottom: '0px',
       }}

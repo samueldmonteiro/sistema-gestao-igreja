@@ -27,26 +27,25 @@ export const DrawerHeader = styled('div')(({ }) => {
 
 const hiddenHeaderRoutes = ['/acesso_restrito'];
 const currentPath = window.location.pathname;
-const shouldShowHeader = !hiddenHeaderRoutes.includes(currentPath);
+//const shouldShowHeader = !hiddenHeaderRoutes.includes(currentPath);
 
-export const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
+export const Main = styled('main', {
+  shouldForwardProp: (prop) => prop !== 'open' && prop !== 'shouldShowHeader', // Evita passar para o DOM
+})(({ theme, open, shouldShowHeader = false }) => ({
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  transition: theme.transitions.create('margin', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  marginLeft: shouldShowHeader ? `-${drawerWidth}px` : '',
+  ...(open && {
     transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: shouldShowHeader ? `-${drawerWidth}px` : '',
-    ...(open && {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  })
-);
+  }),
+}));
 
 export const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',

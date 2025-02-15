@@ -34,7 +34,7 @@ console.log('oi')
       <CssBaseline />
       {shouldShowHeader && <Header open={open} handleDrawerOpen={handleDrawerOpen}/>}
       {shouldShowHeader && <SideBar open={open} handleDrawerClose={handleDrawerClose}/>}
-      <Main open={open} sx={{
+      <Main shouldShowHeader={shouldShowHeader} open={open} sx={{
         flexGrow: 1,
         bgcolor: "#f9f9f9",
         padding: 4,
